@@ -19,6 +19,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\SchoolBook.Data\SchoolBook.Data.csproj" />
+    <ProjectReference Include="..\SchoolBook.Web.ViewModels\SchoolBook.Web.ViewModels.csproj" />
   </ItemGroup>
 
 </Project>
