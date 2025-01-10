@@ -13,6 +13,13 @@ namespace SchoolBook.Web.Data
 
         public DbSet<Grade> Grades { get; set; }
         public DbSet<Student> Students { get; set; }
+        public DbSet<Assignment> Assignments { get; set; }
+        public DbSet<AssignmentSubmission> AssignmentsSubmissions { get; set; }
+        public DbSet<Attendance> Attendances { get; set; }
+        public DbSet<Class> Classes { get; set; }
+        public DbSet<Exam> Exams { get; set; }
+        public DbSet<Subject> Subjects { get; set; }
+        public DbSet<Teacher> Teachers { get; set; }
 
 		protected override void OnModelCreating(ModelBuilder builder)
 		{
@@ -23,6 +30,12 @@ namespace SchoolBook.Web.Data
                 .WithOne()
                 .HasForeignKey<Student>(s => s.UserId)
                 .OnDelete(DeleteBehavior.Cascade);
-		}
+
+            builder.Entity<Teacher>()
+                .HasOne(t => t.User)
+                .WithOne()
+                .HasForeignKey<Teacher>(t => t.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
+        }
 	}
 }
