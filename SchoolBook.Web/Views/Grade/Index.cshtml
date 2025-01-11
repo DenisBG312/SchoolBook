@@ -1,0 +1,43 @@
+﻿@model IEnumerable<SchoolBook.Web.ViewModels.Grade.GradeIndexViewModel>
+
+@{
+    ViewData["Title"] = "Grades";
+}
+
+<div class="container mt-4">
+    <h2 class="mb-4 text-center">Grades</h2>
+    <div class="table-responsive">
+        <table class="table table-striped table-bordered table-hover">
+            <thead class="table-primary">
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Evaluation Name</th>
+                <th scope="col">Graded Date</th>
+                <th scope="col">Exam</th>
+            </tr>
+            </thead>
+            <tbody>
+            @if (Model != null && Model.Any())
+            {
+                int counter = 1;
+                foreach (var grade in Model)
+                {
+                    <tr>
+                        <td>@counter</td>
+                        <td>@grade.EvaluationName</td>
+                        <td>@grade.GradedDate.ToString("dd MMM yyyy")</td>
+                        <td>@grade.ExamName</td>
+                    </tr>
+                    counter++;
+                }
+            }
+            else
+            {
+                <tr>
+                    <td colspan="6" class="text-center">No grades available</td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    </div>
+</div>
