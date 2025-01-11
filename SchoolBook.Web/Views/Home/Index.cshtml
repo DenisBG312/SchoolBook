@@ -1,8 +1,64 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿@using SchoolBook.Web.Data
+
+@inject ApplicationDbContext DbContext
+
+@{
+    ViewData["Title"] = "Home";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome to SchoolBook 📑</h1>
-    <p>Your #1 application for School Management<p>
+<link rel="stylesheet" href="css/home-index.css" />
+
+<div class="hero-section text-center">
+    <div class="container">
+        <h1 class="display-4 mb-4">Welcome to <span class="highlight">SchoolBook</span> 📚</h1>
+        <p class="lead mb-4">Transforming Education Through Digital Innovation</p>
+        <p class="mb-5">Your comprehensive platform for seamless school management, grade tracking, and educational excellence.</p>
+        <img src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?q=80&w=700&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="School Management Platform" class="img-fluid rounded shadow-lg mb-4">
+    </div>
+</div>
+
+<div class="container mb-5">
+    <h2 class="section-title text-center">Why Choose <span class="highlight">SchoolBook?</span></h2>
+    <div class="row g-4">
+        <div class="col-md-4">
+            <div class="feature-card text-center">
+                <div class="feature-icon feature-icon-blue">📊</div>
+                <h3 class="feature-title">Grade Management</h3>
+                <p>Effortlessly track and manage student grades with our intuitive interface. Generate reports and analyze academic progress in real-time.</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="feature-card text-center">
+                <div class="feature-icon feature-icon-red">📝</div>
+                <h3 class="feature-title">Exam Organization</h3>
+                <p>Create, schedule, and manage exams with ease. Keep track of deadlines and automatically notify students of upcoming assessments.</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="feature-card text-center">
+                <div class="feature-icon feature-icon-yellow">🎓</div>
+                <h3 class="feature-title">Student Progress</h3>
+                <p>Monitor student development with comprehensive progress tracking. Identify areas for improvement and celebrate achievements.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="stats-section text-center">
+    <div class="container">
+        <div class="row g-4">
+            <div class="col-md-6">
+                <div class="stat-item">
+                    <div class="stat-number">@DbContext.Students.Count()</div>
+                    <div class="stat-label">Active Students</div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="stat-item">
+                    <div class="stat-number">@DbContext.Teachers.Count()</div>
+                    <div class="stat-label">Expert Teachers</div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

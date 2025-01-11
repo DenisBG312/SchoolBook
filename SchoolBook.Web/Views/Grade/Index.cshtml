@@ -4,45 +4,128 @@
     ViewData["Title"] = "Grades";
 }
 
-<div class="container mt-5">
-    <h2 class="mb-4 text-center text-primary">📚 Grades Overview 📊</h2>
+<style>
+    .grades-container {
+        background: white;
+        border-radius: 1rem;
+        box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+        padding: 2rem;
+        margin-top: 2rem;
+    }
+
+    .grades-header {
+        background: linear-gradient(135deg, #2563eb, #60a5fa);
+        color: white;
+        padding: 1.5rem;
+        border-radius: 0.75rem;
+        margin-bottom: 2rem;
+    }
+
+    .grades-table {
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 0;
+    }
+
+    .grades-table th {
+        background-color: #f8fafc;
+        color: #64748b;
+        font-weight: 600;
+        text-transform: uppercase;
+        font-size: 0.875rem;
+        letter-spacing: 0.05em;
+        padding: 1rem;
+    }
+
+    .grades-table td {
+        padding: 1rem;
+        border-bottom: 1px solid #e2e8f0;
+    }
+
+    .grades-table tr:hover {
+        background-color: #f8fafc;
+    }
+
+    .btn-details {
+        background-color: #2563eb;
+        color: white;
+        border-radius: 0.5rem;
+        padding: 0.5rem 1rem;
+        text-decoration: none;
+        transition: all 0.2s;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .btn-details:hover {
+        background-color: #1d4ed8;
+        color: white;
+        transform: translateY(-1px);
+    }
+
+    .empty-state {
+        text-align: center;
+        padding: 3rem;
+        color: #64748b;
+    }
+
+    .empty-state-icon {
+        font-size: 3rem;
+        margin-bottom: 1rem;
+    }
+</style>
+
+<div class="grades-container">
+    <div class="grades-header">
+        <h2 class="mb-0">📚 Grades Overview</h2>
+        <p class="mb-0 opacity-75">View your academic performance</p>
+    </div>
+
     <div class="table-responsive">
-        <table class="table table-striped table-bordered table-hover">
-            <thead class="table-light">
-            <tr>
-                <th scope="col">#</th>
-                <th scope="col">Evaluation Name</th>
-                <th scope="col">Graded Date</th>
-                <th scope="col">Exam</th>
-                <th scope="col">Actions</th>
-            </tr>
+        <table class="grades-table">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Evaluation Name</th>
+                    <th scope="col">Graded Date</th>
+                    <th scope="col">Exam</th>
+                    <th scope="col">Actions</th>
+                </tr>
             </thead>
             <tbody>
-            @if (Model != null && Model.Any())
-            {
-                int counter = 1;
-                foreach (var grade in Model)
+                @if (Model != null && Model.Any())
+                {
+                    int counter = 1;
+                    foreach (var grade in Model)
+                    {
+                        <tr>
+                            <td>@counter</td>
+                            <td>@grade.EvaluationName</td>
+                            <td>@grade.GradedDate.ToString("dd MMM yyyy")</td>
+                            <td>@grade.ExamName</td>
+                            <td>
+                                <a asp-controller="Grade" asp-action="Details" asp-route-id="@grade.Id" class="btn-details">
+                                    <i class="bi bi-eye"></i>
+                                    View Details
+                                </a>
+                            </td>
+                        </tr>
+                        counter++;
+                    }
+                }
+                else
                 {
                     <tr>
-                        <td>@counter</td>
-                        <td>@grade.EvaluationName</td>
-                        <td>@grade.GradedDate.ToString("dd MMM yyyy")</td>
-                        <td>@grade.ExamName</td>
-                        <td>
-                            <a asp-controller="Grade" asp-action="Details" asp-route-id="@grade.Id" class="btn btn-info">
-                                <i class="bi bi-plus"></i> Details
-                            </a>
+                        <td colspan="5">
+                            <div class="empty-state">
+                                <div class="empty-state-icon">📊</div>
+                                <h3>No Grades Available</h3>
+                                <p class="text-muted">Grades will appear here once they are added to the system.</p>
+                            </div>
                         </td>
                     </tr>
-                    counter++;
                 }
-            }
-            else
-            {
-                <tr>
-                    <td colspan="5" class="text-center text-danger">No grades available 😔</td>
-                </tr>
-            }
             </tbody>
         </table>
     </div>

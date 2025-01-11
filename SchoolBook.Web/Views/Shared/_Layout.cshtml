@@ -1,40 +1,8 @@
 ﻿@using Microsoft.AspNetCore.Identity
-@using Microsoft.AspNetCore.Mvc.TagHelpers
 @using SchoolBook.Data.Models
 
-@functions {
-    private bool IsTeacher()
-    {
-        if (User.Identity.IsAuthenticated)
-        {
-            var userId = UserManager.GetUserId(User);
-            var isTeacher = DbContext.Teachers.Any(t => t.UserId == userId);
-
-            return isTeacher;
-        }
-
-        return false;
-    }
-
-    private bool IsStudent()
-    {
-        if (User.Identity.IsAuthenticated)
-        {
-            var userId = UserManager.GetUserId(User);
-            var isStudent = DbContext.Students.Any(s => s.UserId == userId);
-
-            return isStudent;
-        }
-
-        return false;
-    }
-
-}
 @inject UserManager<ApplicationUser> UserManager
 @inject SchoolBook.Web.Data.ApplicationDbContext DbContext
-
-
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -45,31 +13,41 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/SchoolBook.Web.styles.css" asp-append-version="true" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="~/css/layout-custom.css" />
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <nav class="navbar navbar-expand-sm navbar-light">
             <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">SchoolBook.Web</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">SchoolBook</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            <a class="nav-link @(ViewContext.RouteData.Values["Controller"]?.ToString() == "Home" ? "active" : "")"
+                               asp-area="" asp-controller="Home" asp-action="Index">
+                                <i class="fas fa-home me-2"></i>Home
+                            </a>
                         </li>
-                        @if (IsTeacher())
+                        @if (User.Identity.IsAuthenticated && DbContext.Teachers.Any(t => t.UserId == UserManager.GetUserId(User)))
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Exam" asp-action="Index">Exams</a>
+                                <a class="nav-link @(ViewContext.RouteData.Values["Controller"]?.ToString() == "Exam" ? "active" : "")"
+                                   asp-area="" asp-controller="Exam" asp-action="Index">
+                                    <i class="fas fa-book me-2"></i>Exams
+                                </a>
                             </li>
                         }
-                        @if (IsStudent())
+                        @if (User.Identity.IsAuthenticated && DbContext.Students.Any(s => s.UserId == UserManager.GetUserId(User)))
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Grade" asp-action="Index">My Grades</a>
+                                <a class="nav-link @(ViewContext.RouteData.Values["Controller"]?.ToString() == "Grade" ? "active" : "")"
+                                   asp-area="" asp-controller="Grade" asp-action="Index">
+                                    <i class="fas fa-graduation-cap me-2"></i>My Grades
+                                </a>
                             </li>
                         }
                     </ul>
@@ -78,19 +56,26 @@
             </div>
         </nav>
     </header>
+
     <div class="container">
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; @DateTime.Now.Year - SchoolBook.Web
+    <footer class="footer">
+        <div class="container text-center">
+            <div class="row">
+                <div class="col-12">
+                    <p class="mb-0">&copy; @DateTime.Now.Year - SchoolBook Educational Platform</p>
+                </div>
+            </div>
         </div>
     </footer>
+
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>

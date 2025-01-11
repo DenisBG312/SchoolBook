@@ -1,0 +1,115 @@
+﻿:root {
+    --primary-blue: #2563eb;
+    --primary-red: #eb4825;
+    --primary-yellow: #ebdb25;
+    --light-blue: #60a5fa;
+    --light-red: #fa7d60;
+    --light-yellow: #faed60;
+    --dark-blue: #1e40af;
+    --dark-red: #af2e1e;
+    --dark-yellow: #af9f1e;
+    --background: #f8fafc;
+    --surface: #ffffff;
+    --text: #1e293b;
+}
+
+.hero-section {
+    background: linear-gradient(135deg, var(--primary-blue), var(--light-blue));
+    color: white;
+    padding: 4rem 0;
+    border-radius: 1rem;
+    margin-bottom: 3rem;
+}
+
+.feature-card:nth-child(1) {
+    border-top: 4px solid var(--primary-blue);
+}
+
+.feature-card:nth-child(2) {
+    border-top: 4px solid var(--primary-red);
+}
+
+.feature-card:nth-child(3) {
+    border-top: 4px solid var(--primary-yellow);
+}
+
+.feature-card {
+    background: white;
+    border-radius: 1rem;
+    padding: 2rem;
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+    transition: transform 0.2s;
+    height: 100%;
+}
+
+    .feature-card:hover {
+        transform: translateY(-5px);
+    }
+
+.feature-icon-blue {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    color: var(--primary-blue);
+}
+
+.feature-icon-red {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    color: var(--primary-red);
+}
+
+.feature-icon-yellow {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    color: var(--primary-yellow);
+}
+
+.stats-section {
+    background: linear-gradient(135deg, var(--light-red), var(--primary-red));
+    padding: 3rem 0;
+    border-radius: 1rem;
+    margin: 3rem 0;
+    color: white;
+}
+
+.stat-item {
+    text-align: center;
+}
+
+.stat-number {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: var(--light-yellow);
+    margin-bottom: 0.5rem;
+}
+
+.cta-section {
+    background: linear-gradient(135deg, var(--light-yellow), var(--primary-yellow));
+    padding: 3rem;
+    border-radius: 1rem;
+    text-align: center;
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+    margin-bottom: 3rem;
+    color: var(--text);
+}
+
+.btn-primary {
+    background-color: var(--primary-blue);
+    border-color: var(--primary-blue);
+    padding: 0.75rem 2rem;
+    border-radius: 0.5rem;
+    transition: all 0.3s ease;
+}
+
+    .btn-primary:hover {
+        background-color: var(--dark-blue);
+        border-color: var(--dark-blue);
+        transform: translateY(-2px);
+    }
+
+.section-title {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 2rem;
+    color: #1e293b;
+}

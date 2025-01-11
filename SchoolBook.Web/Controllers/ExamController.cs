@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using SchoolBook.Data.Models;
 using SchoolBook.Web.Data;
 using SchoolBook.Web.ViewModels.Exam;
 
