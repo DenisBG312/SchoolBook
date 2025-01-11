@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SchoolBook.Web.Data;
 
@@ -11,9 +12,11 @@ using SchoolBook.Web.Data;
 namespace SchoolBook.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250111124909_SeedSubjects")]
+    partial class SeedSubjects
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -242,7 +245,7 @@ namespace SchoolBook.Data.Migrations
                         {
                             Id = "aca001db-1d19-4354-80dc-2d646770476c",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "d5941815-8b0b-471e-9df8-810ed19a0a65",
+                            ConcurrencyStamp = "7688001d-78e6-4655-9a0e-e9430da6f860",
                             Email = "alice@gmail.com",
                             EmailConfirmed = true,
                             FirstName = "Alice",
@@ -250,10 +253,10 @@ namespace SchoolBook.Data.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ALICE@GMAIL.COM",
                             NormalizedUserName = "ALICE@GMAIL.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEAUU3Qti32SnCg7RCWUyqVhCTMqFwz0WoppuuLxFqIwYzoKlPj7tZxbs0FsiT6Hl9g==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEDMWwKB3am968I6NHrOt4gn86pcIJSvq7fSQW0fERtsQ2D/ob8FDctqq+ZfxO79oEg==",
                             PhoneNumberConfirmed = false,
                             ProfileImgUrl = "https://img.freepik.com/free-photo/pretty-young-woman-portrait-outdoor_624325-3559.jpg",
-                            SecurityStamp = "3dc68245-bb1e-43f0-96f8-cdf77b093b70",
+                            SecurityStamp = "8f198f0f-5e3f-4768-ac54-82ba2e5d8e4a",
                             TwoFactorEnabled = false,
                             UserName = "alice@gmail.com"
                         },
@@ -261,7 +264,7 @@ namespace SchoolBook.Data.Migrations
                         {
                             Id = "3fcea66d-981b-4ca3-9616-43faa1838343",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "e35aa015-294d-4c14-a3c1-a9699b9c4203",
+                            ConcurrencyStamp = "8548a104-7baf-40cd-830f-853d2a7fdc5b",
                             Email = "bob@gmail.com",
                             EmailConfirmed = true,
                             FirstName = "Bob",
@@ -269,10 +272,10 @@ namespace SchoolBook.Data.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "BOB@GMAIL.COM",
                             NormalizedUserName = "BOB@GMAIL.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEPPKFIqrlLszNcO283ryg1ondONS5mDor9XsHca+wpNINegMDZLSqC1SWwmJHrCcdw==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEPQ68Q5Us2DWVH0lb4jeOw2eW5qgt+BOkH73cj2nORt1Bv7X0//JzrH7IOdBuSl5GA==",
                             PhoneNumberConfirmed = false,
                             ProfileImgUrl = "https://i1.sndcdn.com/avatars-pOLSo9QjSMPjQ6zF-D9J8mg-t500x500.jpg",
-                            SecurityStamp = "b2ce41d6-605d-430b-9235-90c3311b6d77",
+                            SecurityStamp = "8cf16688-7865-435c-8b79-2e75c13f7413",
                             TwoFactorEnabled = false,
                             UserName = "bob@gmail.com"
                         });
@@ -309,17 +312,6 @@ namespace SchoolBook.Data.Migrations
                     b.HasIndex("SubjectId");
 
                     b.ToTable("Assignments");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            AssignedDate = new DateTime(2025, 1, 11, 14, 54, 39, 602, DateTimeKind.Local).AddTicks(6833),
-                            Deadline = new DateTime(2025, 1, 18, 14, 54, 39, 602, DateTimeKind.Local).AddTicks(6835),
-                            Description = "Is the sun a star or a planet? Write your answers below.",
-                            SubjectId = 1,
-                            Title = "Physics Homework"
-                        });
                 });
 
             modelBuilder.Entity("SchoolBook.Data.Models.AssignmentSubmission", b =>
@@ -532,7 +524,7 @@ namespace SchoolBook.Data.Migrations
                             Id = "15713fda-d8ba-47fc-b70b-4cdf170fc78d",
                             Address = "Ruse, Drujba 1",
                             ClassId = 1,
-                            EnrollmentDate = new DateTime(2024, 10, 11, 14, 54, 39, 602, DateTimeKind.Local).AddTicks(8992),
+                            EnrollmentDate = new DateTime(2024, 10, 11, 14, 49, 8, 517, DateTimeKind.Local).AddTicks(3185),
                             ParentContact = "Mother's phone: +359888888888",
                             UserId = "3fcea66d-981b-4ca3-9616-43faa1838343"
                         });
@@ -603,7 +595,7 @@ namespace SchoolBook.Data.Migrations
                         new
                         {
                             Id = "3a6372cd-7705-4af6-a2e3-0364abd8844d",
-                            HireDate = new DateTime(2015, 1, 11, 14, 54, 39, 603, DateTimeKind.Local).AddTicks(907),
+                            HireDate = new DateTime(2015, 1, 11, 14, 49, 8, 517, DateTimeKind.Local).AddTicks(5553),
                             Specialization = "Physics",
                             UserId = "aca001db-1d19-4354-80dc-2d646770476c"
                         });
