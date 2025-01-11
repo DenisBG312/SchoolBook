@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SchoolBook.Web.Data;
 
@@ -11,9 +12,11 @@ using SchoolBook.Web.Data;
 namespace SchoolBook.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250111121754_SeedTeachers")]
+    partial class SeedTeachers
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -242,7 +245,7 @@ namespace SchoolBook.Data.Migrations
                         {
                             Id = "aca001db-1d19-4354-80dc-2d646770476c",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "ce64fe7f-b645-4db0-879b-652574e67c91",
+                            ConcurrencyStamp = "e2880d25-a52d-4d91-b580-8d71970ad815",
                             Email = "alice@gmail.com",
                             EmailConfirmed = true,
                             FirstName = "Alice",
@@ -250,10 +253,10 @@ namespace SchoolBook.Data.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ALICE@GMAIL.COM",
                             NormalizedUserName = "ALICE@GMAIL.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEDL/pGz+YtvihanoLbuIABWfRa4Xlj/VeNzjBc08tlRwNp3b5l3GArUyeDyJfTal3A==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEBL6FVS2TLJKSH8fQ8L0uG01tGUil1VwQpg0n7rb6ywOWvg2+c/93qx2S3FEGuxyyQ==",
                             PhoneNumberConfirmed = false,
                             ProfileImgUrl = "https://img.freepik.com/free-photo/pretty-young-woman-portrait-outdoor_624325-3559.jpg",
-                            SecurityStamp = "6a17357c-6546-44f0-8ae7-09b6dcb1b3e5",
+                            SecurityStamp = "8dd644b5-9add-4075-b4d7-3e7df342943a",
                             TwoFactorEnabled = false,
                             UserName = "alice@gmail.com"
                         },
@@ -261,7 +264,7 @@ namespace SchoolBook.Data.Migrations
                         {
                             Id = "3fcea66d-981b-4ca3-9616-43faa1838343",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "a0c5b4ab-1d2a-4915-acb9-8bae1ef24eb5",
+                            ConcurrencyStamp = "3733e7bc-e5a3-4d32-8788-140c37db2350",
                             Email = "bob@gmail.com",
                             EmailConfirmed = true,
                             FirstName = "Bob",
@@ -269,10 +272,10 @@ namespace SchoolBook.Data.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "BOB@GMAIL.COM",
                             NormalizedUserName = "BOB@GMAIL.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEBSqQJm9FDxenPpMrM3HQfopXR0syz27doXnTpYTJv7g7joBSOgWcAhSYobHEBVvcA==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEAvOQeuYuzDWGiwaygTHIUtsdeVQiVp7pMuJefd8eJZXLBk560Y2boobwCy5Xnes4w==",
                             PhoneNumberConfirmed = false,
                             ProfileImgUrl = "https://i1.sndcdn.com/avatars-pOLSo9QjSMPjQ6zF-D9J8mg-t500x500.jpg",
-                            SecurityStamp = "0b360f47-8451-433e-b2c3-17ff793dfd09",
+                            SecurityStamp = "64bfb24d-cbbe-4761-b153-ac3007014bb7",
                             TwoFactorEnabled = false,
                             UserName = "bob@gmail.com"
                         });
@@ -407,16 +410,6 @@ namespace SchoolBook.Data.Migrations
                     b.HasIndex("TeacherId");
 
                     b.ToTable("Classes");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            ClassName = "11 A",
-                            GradeLevel = "11",
-                            Schedule = "Monday to Friday 10 AM - 11 AM",
-                            TeacherId = "3a6372cd-7705-4af6-a2e3-0364abd8844d"
-                        });
                 });
 
             modelBuilder.Entity("SchoolBook.Data.Models.Exam", b =>
@@ -492,7 +485,7 @@ namespace SchoolBook.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("ClassId")
+                    b.Property<int?>("ClassId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("EnrollmentDate")
@@ -514,17 +507,6 @@ namespace SchoolBook.Data.Migrations
                         .IsUnique();
 
                     b.ToTable("Students");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "15713fda-d8ba-47fc-b70b-4cdf170fc78d",
-                            Address = "Ruse, Drujba 1",
-                            ClassId = 1,
-                            EnrollmentDate = new DateTime(2024, 10, 11, 14, 44, 28, 732, DateTimeKind.Local).AddTicks(2632),
-                            ParentContact = "Mother's phone: +359888888888",
-                            UserId = "3fcea66d-981b-4ca3-9616-43faa1838343"
-                        });
                 });
 
             modelBuilder.Entity("SchoolBook.Data.Models.Subject", b =>
@@ -583,7 +565,7 @@ namespace SchoolBook.Data.Migrations
                         new
                         {
                             Id = "3a6372cd-7705-4af6-a2e3-0364abd8844d",
-                            HireDate = new DateTime(2015, 1, 11, 14, 44, 28, 732, DateTimeKind.Local).AddTicks(4117),
+                            HireDate = new DateTime(2015, 1, 11, 14, 17, 54, 174, DateTimeKind.Local).AddTicks(5409),
                             Specialization = "Physics",
                             UserId = "aca001db-1d19-4354-80dc-2d646770476c"
                         });
@@ -728,19 +710,15 @@ namespace SchoolBook.Data.Migrations
 
             modelBuilder.Entity("SchoolBook.Data.Models.Student", b =>
                 {
-                    b.HasOne("SchoolBook.Data.Models.Class", "Class")
+                    b.HasOne("SchoolBook.Data.Models.Class", null)
                         .WithMany("Students")
-                        .HasForeignKey("ClassId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ClassId");
 
                     b.HasOne("SchoolBook.Data.Models.ApplicationUser", "User")
                         .WithOne()
                         .HasForeignKey("SchoolBook.Data.Models.Student", "UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Class");
 
                     b.Navigation("User");
                 });

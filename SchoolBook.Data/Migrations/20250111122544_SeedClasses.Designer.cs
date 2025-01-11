@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SchoolBook.Web.Data;
 
@@ -11,9 +12,11 @@ using SchoolBook.Web.Data;
 namespace SchoolBook.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250111122544_SeedClasses")]
+    partial class SeedClasses
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -242,7 +245,7 @@ namespace SchoolBook.Data.Migrations
                         {
                             Id = "aca001db-1d19-4354-80dc-2d646770476c",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "ce64fe7f-b645-4db0-879b-652574e67c91",
+                            ConcurrencyStamp = "d3ea81da-aa0f-4327-b3b4-bf017ea61acd",
                             Email = "alice@gmail.com",
                             EmailConfirmed = true,
                             FirstName = "Alice",
@@ -250,10 +253,10 @@ namespace SchoolBook.Data.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ALICE@GMAIL.COM",
                             NormalizedUserName = "ALICE@GMAIL.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEDL/pGz+YtvihanoLbuIABWfRa4Xlj/VeNzjBc08tlRwNp3b5l3GArUyeDyJfTal3A==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEFKkDT11gnrnKlZ19q87eVMA84BWpAQOmajy4qjOJa/ixUDuJu0w146GQqDFxvWWUg==",
                             PhoneNumberConfirmed = false,
                             ProfileImgUrl = "https://img.freepik.com/free-photo/pretty-young-woman-portrait-outdoor_624325-3559.jpg",
-                            SecurityStamp = "6a17357c-6546-44f0-8ae7-09b6dcb1b3e5",
+                            SecurityStamp = "007093e4-9117-47e1-8e51-9ae7ee795760",
                             TwoFactorEnabled = false,
                             UserName = "alice@gmail.com"
                         },
@@ -261,7 +264,7 @@ namespace SchoolBook.Data.Migrations
                         {
                             Id = "3fcea66d-981b-4ca3-9616-43faa1838343",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "a0c5b4ab-1d2a-4915-acb9-8bae1ef24eb5",
+                            ConcurrencyStamp = "33dbd930-7aaa-409c-b86f-d0c1bca6ab2a",
                             Email = "bob@gmail.com",
                             EmailConfirmed = true,
                             FirstName = "Bob",
@@ -269,10 +272,10 @@ namespace SchoolBook.Data.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "BOB@GMAIL.COM",
                             NormalizedUserName = "BOB@GMAIL.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEBSqQJm9FDxenPpMrM3HQfopXR0syz27doXnTpYTJv7g7joBSOgWcAhSYobHEBVvcA==",
+                            PasswordHash = "AQAAAAIAAYagAAAAED6AE2TTGBAMOmJbF1WD8FcYhHnlWfUC1yUfpiGfwL39dgbx6qMDHtRcUcxlwCxnLw==",
                             PhoneNumberConfirmed = false,
                             ProfileImgUrl = "https://i1.sndcdn.com/avatars-pOLSo9QjSMPjQ6zF-D9J8mg-t500x500.jpg",
-                            SecurityStamp = "0b360f47-8451-433e-b2c3-17ff793dfd09",
+                            SecurityStamp = "69052dc5-3235-48ef-89ec-1d6b7f831c06",
                             TwoFactorEnabled = false,
                             UserName = "bob@gmail.com"
                         });
@@ -492,7 +495,7 @@ namespace SchoolBook.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("ClassId")
+                    b.Property<int?>("ClassId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("EnrollmentDate")
@@ -514,17 +517,6 @@ namespace SchoolBook.Data.Migrations
                         .IsUnique();
 
                     b.ToTable("Students");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "15713fda-d8ba-47fc-b70b-4cdf170fc78d",
-                            Address = "Ruse, Drujba 1",
-                            ClassId = 1,
-                            EnrollmentDate = new DateTime(2024, 10, 11, 14, 44, 28, 732, DateTimeKind.Local).AddTicks(2632),
-                            ParentContact = "Mother's phone: +359888888888",
-                            UserId = "3fcea66d-981b-4ca3-9616-43faa1838343"
-                        });
                 });
 
             modelBuilder.Entity("SchoolBook.Data.Models.Subject", b =>
@@ -583,7 +575,7 @@ namespace SchoolBook.Data.Migrations
                         new
                         {
                             Id = "3a6372cd-7705-4af6-a2e3-0364abd8844d",
-                            HireDate = new DateTime(2015, 1, 11, 14, 44, 28, 732, DateTimeKind.Local).AddTicks(4117),
+                            HireDate = new DateTime(2015, 1, 11, 14, 25, 44, 186, DateTimeKind.Local).AddTicks(8244),
                             Specialization = "Physics",
                             UserId = "aca001db-1d19-4354-80dc-2d646770476c"
                         });
@@ -728,19 +720,15 @@ namespace SchoolBook.Data.Migrations
 
             modelBuilder.Entity("SchoolBook.Data.Models.Student", b =>
                 {
-                    b.HasOne("SchoolBook.Data.Models.Class", "Class")
+                    b.HasOne("SchoolBook.Data.Models.Class", null)
                         .WithMany("Students")
-                        .HasForeignKey("ClassId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ClassId");
 
                     b.HasOne("SchoolBook.Data.Models.ApplicationUser", "User")
                         .WithOne()
                         .HasForeignKey("SchoolBook.Data.Models.Student", "UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Class");
 
                     b.Navigation("User");
                 });

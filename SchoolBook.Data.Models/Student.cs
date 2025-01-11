@@ -15,6 +15,10 @@ namespace SchoolBook.Data.Models
         public string ParentContact { get; set; } = string.Empty;
         [Required]
         public string Address { get; set; } = string.Empty;
+        [Required]
+        public int ClassId { get; set; }
+        [ForeignKey(nameof(ClassId))]
+        public Class Class { get; set; }
         public ICollection<Grade> Grades { get; set; } = new HashSet<Grade>();
     }
 }
