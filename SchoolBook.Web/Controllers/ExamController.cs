@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Security.Claims;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using SchoolBook.Data.Models;
@@ -33,6 +34,48 @@ namespace SchoolBook.Web.Controllers
         }
 
         [HttpGet]
+        public async Task<IActionResult> GetStudentExams()
+        {
+            var userId = GetUserId();
+
+            // Fetch the student and their class
+            var student = await _context.Students
+                .Include(s => s.Class)
+                .FirstOrDefaultAsync(s => s.UserId == userId);
+
+            if (student == null)
+            {
+                return NotFound(); // Handle case where student does not exist
+            }
+
+            // Get the student's class ID
+            var classId = student.Class?.Id;
+
+            if (classId == null)
+            {
+                return NotFound(); // Handle case where student is not associated with a class
+            }
+
+            // Fetch exams linked to the student's class
+            var exams = await _context.Exams
+                .Include(e => e.Subject) // Include Subject details
+                .Include(e => e.ExamClasses) // Include ExamClasses for filtering
+                .ThenInclude(ec => ec.Class) // Include Class for relationship resolution
+                .Where(e => e.ExamClasses.Any(ec => ec.ClassId == classId)) // Match only exams for the student's class
+                .Select(e => new ExamIndexViewModel
+                {
+                    Id = e.Id,
+                    ExamDate = e.ExamDate,
+                    ExamName = e.ExamName,
+                    SubjectName = e.Subject.SubjectName
+                })
+                .ToListAsync();
+
+            // Return the shared Index view with filtered exams
+            return View("Index", exams);
+        }
+
+        [HttpGet]
         public async Task<IActionResult> Create()
         {
             var viewModel = new ExamCreateViewModel
@@ -48,7 +91,7 @@ namespace SchoolBook.Web.Controllers
         public async Task<IActionResult> Create(ExamCreateViewModel model)
         {
             ModelState.Remove("Subjects");
-            ModelState.Remove("Class");
+            ModelState.Remove("Classes");
 
             if (ModelState.IsValid)
             {
@@ -80,6 +123,11 @@ namespace SchoolBook.Web.Controllers
             model.Classes = new SelectList(await _context.Classes.ToListAsync(), "Id", "ClassName");
 
             return View(model);
+        }
+
+        private string GetUserId()
+        {
+            return User.FindFirstValue(ClaimTypes.NameIdentifier)!;
         }
     }
 }

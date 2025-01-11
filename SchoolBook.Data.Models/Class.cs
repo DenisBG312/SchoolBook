@@ -27,5 +27,6 @@ namespace SchoolBook.Data.Models
         public Teacher Teacher { get; set; } = null!;
         public ICollection<Student> Students { get; set; } = new HashSet<Student>();
         public ICollection<Subject> Subjects { get; set; } = new HashSet<Subject>();
+        public ICollection<ExamClass> ExamClasses { get; set; } = new HashSet<ExamClass>();
     }
 }

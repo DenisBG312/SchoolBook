@@ -24,6 +24,7 @@ namespace SchoolBook.Data.Models
         [ForeignKey(nameof(SubjectId))]
         public Subject Subject { get; set; }
 
+        public ICollection<ExamClass> ExamClasses { get; set; } = new HashSet<ExamClass>();
         public ICollection<Grade> Grades { get; set; } = new HashSet<Grade>();
     }
 }
