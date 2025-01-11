@@ -21,10 +21,11 @@ namespace SchoolBook.Web.Data
         public DbSet<Exam> Exams { get; set; }
         public DbSet<Subject> Subjects { get; set; }
         public DbSet<Teacher> Teachers { get; set; }
+        public DbSet<ExamClass> ExamClasses { get; set; }
 
-		protected override void OnModelCreating(ModelBuilder builder)
-		{
-			base.OnModelCreating(builder);
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            base.OnModelCreating(builder);
 
             builder.Entity<Student>()
                 .HasOne(s => s.User)
@@ -38,7 +39,10 @@ namespace SchoolBook.Web.Data
                 .HasForeignKey<Teacher>(t => t.UserId)
                 .OnDelete(DeleteBehavior.Cascade);
 
+            builder.Entity<ExamClass>()
+                .HasKey(pk => new { pk.ExamId, pk.ClassId});
+
             builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
         }
-	}
+    }
 }

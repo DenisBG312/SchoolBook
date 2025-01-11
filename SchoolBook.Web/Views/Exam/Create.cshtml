@@ -1,0 +1,62 @@
+﻿@model SchoolBook.Web.ViewModels.Exam.ExamCreateViewModel
+
+@{
+    ViewData["Title"] = "Create Exam";
+}
+
+<div class="container mt-5">
+    <h2 class="text-center">@ViewData["Title"]</h2>
+    <div class="card shadow">
+        <div class="card-body">
+            <form asp-action="Create" method="post" class="needs-validation">
+                <div class="mb-3">
+                    <label asp-for="ExamName" class="form-label fw-bold"></label>
+                    <input asp-for="ExamName" class="form-control" placeholder="Enter the exam name" />
+                    <div class="text-danger">
+                        <span asp-validation-for="ExamName"></span>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="ExamDate" class="form-label fw-bold"></label>
+                    <input asp-for="ExamDate" type="date" class="form-control" />
+                    <div class="text-danger">
+                        <span asp-validation-for="ExamDate"></span>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="MaximumMarks" class="form-label fw-bold"></label>
+                    <input asp-for="MaximumMarks" type="number" class="form-control" placeholder="Enter maximum marks" />
+                    <div class="text-danger">
+                        <span asp-validation-for="MaximumMarks"></span>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="SubjectId" class="form-label fw-bold"></label>
+                    <select asp-for="SubjectId" asp-items="Model.Subjects" class="form-select">
+                        <option value="" disabled selected>Select a subject</option>
+                    </select>
+                    <span asp-validation-for="SubjectId" class="text-danger"></span>
+                </div>
+                
+                <div class="form-group">
+                    <label asp-for="ClassId" class="control-label"></label>
+                    <select asp-for="ClassId" class="form-control" asp-items="Model.Classes">
+                        <option value="" disabled selected>Select a class</option>
+                    </select>
+                    <span asp-validation-for="ClassId" class="text-danger"></span>
+                </div>
+
+                <div class="d-grid mt-3">
+                    <button type="submit" class="btn btn-primary btn-lg">Create Exam</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
