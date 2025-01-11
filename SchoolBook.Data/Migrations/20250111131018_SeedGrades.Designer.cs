@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SchoolBook.Web.Data;
 
@@ -11,9 +12,11 @@ using SchoolBook.Web.Data;
 namespace SchoolBook.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250111131018_SeedGrades")]
+    partial class SeedGrades
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -242,7 +245,7 @@ namespace SchoolBook.Data.Migrations
                         {
                             Id = "aca001db-1d19-4354-80dc-2d646770476c",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "0859ad4c-4265-487c-8a52-5ed6ca947088",
+                            ConcurrencyStamp = "9f0cb2a5-b1ed-46ab-992e-c97ed3d91432",
                             Email = "alice@gmail.com",
                             EmailConfirmed = true,
                             FirstName = "Alice",
@@ -250,10 +253,10 @@ namespace SchoolBook.Data.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ALICE@GMAIL.COM",
                             NormalizedUserName = "ALICE@GMAIL.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEIpQVZViHEmPyfVciqNN8sYfK+D+6TtLChQMAPefYtwJNX+a23MdWlDHbRncUHv8uQ==",
+                            PasswordHash = "AQAAAAIAAYagAAAAENdUX4A4E6+4vM3i7uhFOdmkU3OTnJaZSux8I0hNodmxq78RcH9TtJFpX+mBCVCX1w==",
                             PhoneNumberConfirmed = false,
                             ProfileImgUrl = "https://img.freepik.com/free-photo/pretty-young-woman-portrait-outdoor_624325-3559.jpg",
-                            SecurityStamp = "027b835c-5e8d-46bf-abc9-a57c3c93c6b0",
+                            SecurityStamp = "dd1ac021-2f08-4051-a1bb-c998155a3ecb",
                             TwoFactorEnabled = false,
                             UserName = "alice@gmail.com"
                         },
@@ -261,7 +264,7 @@ namespace SchoolBook.Data.Migrations
                         {
                             Id = "3fcea66d-981b-4ca3-9616-43faa1838343",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "006ee67a-c9b1-4d98-a0c1-a861f56b0b09",
+                            ConcurrencyStamp = "83f1eb77-1de3-44ed-9cf1-ccd51e648090",
                             Email = "bob@gmail.com",
                             EmailConfirmed = true,
                             FirstName = "Bob",
@@ -269,10 +272,10 @@ namespace SchoolBook.Data.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "BOB@GMAIL.COM",
                             NormalizedUserName = "BOB@GMAIL.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAELtuaE7c3p9Y3oFG19ah9EyVTVS5GLFdOvITA7R8a1U6XajOru1RbukWXXhdlzq0mw==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEL+/P5n76w9JoZgRg++P3pJ4bfCUmW3miAVACiR/Gz6CE6hXGKnz9TwSv6skiOGDQg==",
                             PhoneNumberConfirmed = false,
                             ProfileImgUrl = "https://i1.sndcdn.com/avatars-pOLSo9QjSMPjQ6zF-D9J8mg-t500x500.jpg",
-                            SecurityStamp = "91a69c42-03cf-470c-9176-1f8afb29e43f",
+                            SecurityStamp = "51303d61-57e2-42af-a103-05dd0650a7ea",
                             TwoFactorEnabled = false,
                             UserName = "bob@gmail.com"
                         });
@@ -314,8 +317,8 @@ namespace SchoolBook.Data.Migrations
                         new
                         {
                             Id = 1,
-                            AssignedDate = new DateTime(2025, 1, 11, 15, 13, 55, 769, DateTimeKind.Local).AddTicks(2305),
-                            Deadline = new DateTime(2025, 1, 18, 15, 13, 55, 769, DateTimeKind.Local).AddTicks(2307),
+                            AssignedDate = new DateTime(2025, 1, 11, 15, 10, 17, 957, DateTimeKind.Local).AddTicks(7721),
+                            Deadline = new DateTime(2025, 1, 18, 15, 10, 17, 957, DateTimeKind.Local).AddTicks(7724),
                             Description = "Is the sun a star or a planet? Write your answers below.",
                             SubjectId = 1,
                             Title = "Physics Homework"
@@ -362,7 +365,7 @@ namespace SchoolBook.Data.Migrations
                             AssignmentId = 1,
                             MarksObtained = 90,
                             StudentId = "15713fda-d8ba-47fc-b70b-4cdf170fc78d",
-                            SubmissionDate = new DateTime(2025, 1, 11, 15, 13, 55, 769, DateTimeKind.Local).AddTicks(3728)
+                            SubmissionDate = new DateTime(2025, 1, 11, 15, 10, 17, 958, DateTimeKind.Local).AddTicks(290)
                         });
                 });
 
@@ -394,16 +397,6 @@ namespace SchoolBook.Data.Migrations
                     b.HasIndex("StudentId");
 
                     b.ToTable("Attendances");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            AttendanceDate = new DateTime(2025, 1, 10, 15, 13, 55, 769, DateTimeKind.Local).AddTicks(4954),
-                            ClassId = 1,
-                            IsPresent = false,
-                            StudentId = "15713fda-d8ba-47fc-b70b-4cdf170fc78d"
-                        });
                 });
 
             modelBuilder.Entity("SchoolBook.Data.Models.Class", b =>
@@ -482,7 +475,7 @@ namespace SchoolBook.Data.Migrations
                         new
                         {
                             Id = 1,
-                            ExamDate = new DateTime(2025, 2, 11, 15, 13, 55, 769, DateTimeKind.Local).AddTicks(7584),
+                            ExamDate = new DateTime(2025, 2, 11, 15, 10, 17, 958, DateTimeKind.Local).AddTicks(4387),
                             ExamName = "Protons and Neutrons",
                             MaximumMarks = 100,
                             SubjectId = 1
@@ -530,7 +523,7 @@ namespace SchoolBook.Data.Migrations
                             Comment = "Keep up the excellent job Bob!",
                             EvaluationName = "Excellent 6",
                             ExamId = 1,
-                            GradedDate = new DateTime(2025, 1, 11, 15, 13, 55, 769, DateTimeKind.Local).AddTicks(8830),
+                            GradedDate = new DateTime(2025, 1, 11, 15, 10, 17, 958, DateTimeKind.Local).AddTicks(6447),
                             StudentId = "15713fda-d8ba-47fc-b70b-4cdf170fc78d"
                         });
                 });
@@ -573,7 +566,7 @@ namespace SchoolBook.Data.Migrations
                             Id = "15713fda-d8ba-47fc-b70b-4cdf170fc78d",
                             Address = "Ruse, Drujba 1",
                             ClassId = 1,
-                            EnrollmentDate = new DateTime(2024, 10, 11, 15, 13, 55, 769, DateTimeKind.Local).AddTicks(9897),
+                            EnrollmentDate = new DateTime(2024, 10, 11, 15, 10, 17, 958, DateTimeKind.Local).AddTicks(8050),
                             ParentContact = "Mother's phone: +359888888888",
                             UserId = "3fcea66d-981b-4ca3-9616-43faa1838343"
                         });
@@ -644,7 +637,7 @@ namespace SchoolBook.Data.Migrations
                         new
                         {
                             Id = "3a6372cd-7705-4af6-a2e3-0364abd8844d",
-                            HireDate = new DateTime(2015, 1, 11, 15, 13, 55, 770, DateTimeKind.Local).AddTicks(4327),
+                            HireDate = new DateTime(2015, 1, 11, 15, 10, 17, 959, DateTimeKind.Local).AddTicks(988),
                             Specialization = "Physics",
                             UserId = "aca001db-1d19-4354-80dc-2d646770476c"
                         });

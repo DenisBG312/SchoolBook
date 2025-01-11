@@ -17,6 +17,10 @@ namespace SchoolBook.Data.Models
 		public string Comment {  get; set; } = string.Empty ;
 		public DateTime GradedDate { get; set; } = DateTime.Now;
 		[Required]
+		public int ExamId { get; set; }
+		[ForeignKey(nameof(ExamId))]
+		public Exam Exam { get; set; }
+		[Required]
 		public string StudentId { get; set; } = string.Empty;
 		[ForeignKey(nameof(StudentId))]
 		public Student Student { get; set; }
