@@ -1,0 +1,99 @@
+﻿@model SchoolBook.Web.ViewModels.Grade.GradeDetailsViewModel
+@{
+    ViewData["Title"] = "Grade Details";
+}
+
+<link rel="stylesheet" href="~/css/grade-details.css" />
+
+<div class="container py-4">
+    <div class="card shadow-lg">
+        <div class="card-header bg-primary text-white position-relative">
+            <h2 class="card-title mb-0 text-center py-3">
+                📚 Grade Details 📝
+            </h2>
+            <div class="header-pattern"></div>
+        </div>
+
+        <div class="card-body">
+            <div class="row g-4">
+                <div class="col-md-6">
+                    <div class="info-group">
+                        <h3 class="h5 text-primary mb-3">
+                            <i class="bi bi-person-badge"></i> 👨‍🎓 Student Information
+                        </h3>
+                        <div class="mb-3 info-item">
+                            <label class="fw-bold">
+                                <i class="bi bi-person"></i> Student Name:
+                            </label>
+                            <p class="mb-0">@Model.StudentName</p>
+                        </div>
+                        <div class="mb-3 info-item">
+                            <label class="fw-bold">
+                                <i class="bi bi-mortarboard"></i> Class:
+                            </label>
+                            <p class="mb-0">@Model.ClassName</p>
+                        </div>
+                        <div class="mb-3 info-item">
+                            <label class="fw-bold">
+                                <i class="bi bi-book"></i> Subject:
+                            </label>
+                            <p class="mb-0">@Model.SubjectName</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="info-group">
+                        <h3 class="h5 text-primary mb-3">
+                            <i class="bi bi-award"></i> 📊 Grade Information
+                        </h3>
+                        <div class="mb-3 info-item">
+                            <label class="fw-bold">
+                                <i class="bi bi-star"></i> Evaluation Name:
+                            </label>
+                            <p class="mb-0">@Model.EvaluationName</p>
+                        </div>
+                        <div class="mb-3 info-item">
+                            <label class="fw-bold">
+                                <i class="bi bi-calendar"></i> Graded Date:
+                            </label>
+                            <p class="mb-0">📅 @Model.GradedDate.ToString("MMMM dd, yyyy")</p>
+                        </div>
+                        <div class="mb-3 info-item">
+                            <label class="fw-bold">
+                                <i class="bi bi-person-workspace"></i> Teacher:
+                            </label>
+                            <p class="mb-0">👨‍🏫 @Model.TeacherName</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12">
+                    <div class="info-group">
+                        <h3 class="h5 text-primary mb-3">
+                            <i class="bi bi-chat-quote"></i> 💭 Teacher's Comment
+                        </h3>
+                        <div class="p-4 bg-light rounded comment-box">
+                            @if (string.IsNullOrEmpty(Model.Comment))
+                            {
+                                <p class="text-muted mb-0">📝 No comment provided.</p>
+                            }
+                            else
+                            {
+                                <p class="mb-0">💬 @Model.Comment</p>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card-footer">
+            <div class="d-flex justify-content-between align-items-center">
+                <a asp-action="Index" class="btn btn-primary btn-lg">
+                    <i class="bi bi-arrow-left"></i> Back to List 📋
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

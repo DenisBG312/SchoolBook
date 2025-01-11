@@ -8,6 +8,7 @@ namespace SchoolBook.Web.ViewModels.Grade
 {
     public class GradeIndexViewModel
     {
+        public int Id { get; set; }
         public string EvaluationName { get; set; }
         public DateTime GradedDate { get; set; }
         public string ExamName { get; set; }
