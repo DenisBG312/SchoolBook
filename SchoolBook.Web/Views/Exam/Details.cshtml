@@ -1,0 +1,178 @@
+﻿@model SchoolBook.Web.ViewModels.Exam.ExamDetailsViewModel
+@{
+    ViewData["Title"] = "Exam Details";
+
+    string GetExamStatus()
+    {
+        if (!Model.IsUpcoming)
+            return "Completed";
+
+        if (Model.TimeUntilExam.Days > 7)
+            return "Upcoming";
+
+        if (Model.TimeUntilExam.Days > 1)
+            return "Soon";
+
+        return "Tomorrow";
+    }
+
+    string GetStatusColor()
+    {
+        return GetExamStatus() switch
+        {
+            "Completed" => "text-success",
+            "Upcoming" => "text-primary",
+            "Soon" => "text-warning",
+            "Tomorrow" => "text-danger",
+            _ => "text-primary"
+        };
+    }
+}
+
+<link rel="stylesheet" href="~/css/exam-details.css"/>
+
+<div class="container py-4">
+    <div class="card shadow-lg">
+        <div class="card-header bg-primary text-white position-relative">
+            <h2 class="card-title mb-0 text-center py-3">
+                📝 Exam Details 📚
+            </h2>
+            <div class="header-pattern"></div>
+        </div>
+
+        <div class="card-body">
+            <div class="row g-4">
+                <div class="col-12">
+                    <div class="status-banner @GetStatusColor() text-center p-3 rounded-3 mb-4">
+                        <span class="status-icon">
+                            @switch (GetExamStatus())
+                            {
+                                case "Completed":
+                                    <i class="bi bi-check-circle-fill"></i>
+                                    break;
+                                case "Tomorrow":
+                                    <i class="bi bi-exclamation-circle-fill"></i>
+                                    break;
+                                default:
+                                    <i class="bi bi-calendar-event"></i>
+                                    break;
+                            }
+                        </span>
+                        <span class="h5 mb-0 ms-2">
+                            @if (Model.IsUpcoming)
+                            {
+                                if (Model.TimeUntilExam.Days > 0)
+                                {
+                                    <text>@Model.TimeUntilExam.Days days until exam</text>
+                                }
+                                else if (Model.TimeUntilExam.Hours > 0)
+                                {
+                                    <text>@Model.TimeUntilExam.Hours hours until exam</text>
+                                }
+                                else
+                                {
+                                    <text>Exam starts soon!</text>
+                                }
+                            }
+                            else
+                            {
+                                <text>Exam Completed</text>
+                            }
+                        </span>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="info-group">
+                        <h3 class="h5 text-primary mb-3">
+                            <i class="bi bi-journal-text"></i> 📋 Exam Information
+                        </h3>
+                        <div class="mb-3 info-item">
+                            <label class="fw-bold">
+                                <i class="bi bi-pencil-square"></i> Exam Name:
+                            </label>
+                            <p class="mb-0">@Model.ExamName</p>
+                        </div>
+                        <div class="mb-3 info-item">
+                            <label class="fw-bold">
+                                <i class="bi bi-calendar"></i> Date:
+                            </label>
+                            <p class="mb-0">📅 @Model.ExamDate.ToString("dddd, MMMM dd, yyyy")</p>
+                        </div>
+                        <div class="mb-3 info-item">
+                            <label class="fw-bold">
+                                <i class="bi bi-clock"></i> Time:
+                            </label>
+                            <p class="mb-0">⏰ @Model.ExamDate.ToString("hh:mm tt")</p>
+                        </div>
+                        <div class="mb-3 info-item">
+                            <label class="fw-bold">
+                                <i class="bi bi-trophy"></i> Maximum Marks:
+                            </label>
+                            <p class="mb-0">🎯 @Model.MaximumMarks</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="info-group">
+                        <div class="profile-section mb-4">
+                            <div class="profile-image-container">
+                                @if (string.IsNullOrEmpty(Model.TeacherImgUrl))
+                                {
+                                    <div class="default-avatar">
+                                        <i class="bi bi-person-circle"></i>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <img src="@Model.TeacherImgUrl" alt="@Model.TeacherName" class="profile-image" />
+                                }
+                            </div>
+                        </div>
+                        <h3 class="h5 text-primary mb-3">
+                            <i class="bi bi-person-video3"></i> 👨‍🏫 Teacher & Subject
+                        </h3>
+                        <div class="mb-3 info-item">
+                            <label class="fw-bold">
+                                <i class="bi bi-person"></i> Teacher:
+                            </label>
+                            <p class="mb-0">@Model.TeacherName</p>
+                        </div>
+                        <div class="mb-3 info-item">
+                            <label class="fw-bold">
+                                <i class="bi bi-book"></i> Subject:
+                            </label>
+                            <p class="mb-0">@Model.SubjectName</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12">
+                    <div class="info-group">
+                        <h3 class="h5 text-primary mb-3">
+                            <i class="bi bi-people"></i> 👥 Assigned Classes
+                        </h3>
+                        <div class="row g-3">
+                            @foreach (var className in Model.AssignedClasses)
+                            {
+                                <div class="col-md-4 col-lg-3">
+                                    <div class="class-badge p-3 rounded-3 bg-light text-center">
+                                        <i class="bi bi-mortarboard mb-2"></i>
+                                        <h6 class="mb-0">@className</h6>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card-footer">
+            <a asp-action="StudentExams" class="btn btn-primary btn-lg">
+                <i class="bi bi-arrow-left"></i> Back to List 📋
+            </a>
+        </div>
+    </div>
+</div>

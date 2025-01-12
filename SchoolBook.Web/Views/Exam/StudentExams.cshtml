@@ -1,0 +1,113 @@
+﻿@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model IEnumerable<SchoolBook.Web.ViewModels.Exam.ExamIndexViewModel>
+
+@{
+    ViewData["Title"] = "Upcoming Exams";
+}
+
+<link rel="stylesheet" href="~/css/student-exam.css"/>
+
+<div class="exam-dashboard">
+    <div class="dashboard-header">
+        <h1>📚 Upcoming Exams 📝</h1>
+        <p class="text-muted">
+            <i class="fas fa-calendar-alt me-2"></i>
+            Your exam schedule for this semester
+        </p>
+    </div>
+
+    @if (!Model.Any())
+    {
+        <div class="empty-state">
+            <div class="empty-state-icon">
+                <i class="fas fa-book-reader fa-3x mb-3"></i>
+                <div>📚</div>
+            </div>
+            <h3>No Exams Scheduled</h3>
+            <p>You don't have any upcoming exams at the moment. Time to relax! 🎉</p>
+        </div>
+    }
+    else
+    {
+        <div class="exam-grid">
+            @foreach (var exam in Model)
+            {
+                <div class="exam-card">
+                    <div class="exam-card-subject">
+                        <span class="subject-badge">
+                            <i class="fas fa-graduation-cap me-2"></i>
+                            @exam.SubjectName
+                        </span>
+                        <div class="exam-date">
+                            <i class="fas fa-calendar-day mb-1"></i>
+                            <div class="date-day">@exam.ExamDate.ToString("dd")</div>
+                            <div class="date-month">@exam.ExamDate.ToString("MMM")</div>
+                        </div>
+                    </div>
+                    <div class="exam-card-content">
+                        <h3>
+                            <i class="fas fa-pen-fancy me-2"></i>
+                            @exam.ExamName
+                        </h3>
+                        <div class="exam-info">
+                            <div class="exam-time">
+                                <i class="far fa-clock me-2"></i>
+                                @exam.ExamDate.ToString("hh:mm tt")
+                            </div>
+                            <div class="exam-status mt-2">
+                                @{
+                                    var daysUntilExam = (exam.ExamDate - DateTime.Now).Days;
+                                    if (daysUntilExam > 7)
+                                    {
+                                        <span class="status-badge relaxed">
+                                            <i class="fas fa-smile me-1"></i>
+                                            @daysUntilExam days to go
+                                        </span>
+                                    }
+                                    else if (daysUntilExam > 3)
+                                    {
+                                        <span class="status-badge moderate">
+                                            <i class="fas fa-hourglass-half me-1"></i>
+                                            Coming soon
+                                        </span>
+                                    }
+                                    else
+                                    {
+                                        <span class="status-badge urgent">
+                                            <i class="fas fa-exclamation-circle me-1"></i>
+                                            Approaching fast!
+                                        </span>
+                                    }
+                                }
+                            </div>
+                        </div>
+                    </div>
+                    <div class="exam-card-footer">
+                        <a asp-action="Details" asp-route-id="@exam.Id" class="exam-details-btn">
+                            <i class="fas fa-info-circle me-2"></i>
+                            View Details
+                            <i class="fas fa-chevron-right ms-2"></i>
+                        </a>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</div>
+
+@section Scripts {
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const cards = document.querySelectorAll('.exam-card');
+            cards.forEach((card, index) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                setTimeout(() => {
+                    card.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }, 100 * index);
+            });
+        });
+    </script>
+}

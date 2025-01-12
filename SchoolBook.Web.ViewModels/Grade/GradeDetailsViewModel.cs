@@ -16,6 +16,8 @@ namespace SchoolBook.Web.ViewModels.Grade
         public string StudentName { get; set; } = string.Empty;
         public string ClassName { get; set; } = string.Empty;
         public string SubjectName { get; set; } = string.Empty;
+        public string TeacherImgUrl { get; set; } = string.Empty;
+        public string StudentImgUrl { get; set; } = string.Empty;
 
     }
 }

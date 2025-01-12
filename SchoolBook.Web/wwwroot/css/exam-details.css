@@ -1,0 +1,109 @@
+﻿.profile-section {
+    text-align: center;
+}
+
+.profile-image-container {
+    width: 150px;
+    height: 150px;
+    margin: 0 auto;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 4px solid #3b82f6;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+    .profile-image-container:hover {
+        transform: scale(1.05);
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    }
+
+.profile-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.default-avatar {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #1e40af, #3b82f6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 4rem;
+}
+
+.info-group {
+    background: white;
+    border-radius: 1rem;
+    padding: 1.5rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.info-item {
+    transition: transform 0.2s ease;
+    padding: 0.75rem;
+    border-radius: 0.5rem;
+}
+
+    .info-item:hover {
+        transform: translateX(5px);
+        background-color: #f8fafc;
+    }
+
+.header-pattern {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 20px;
+    background: linear-gradient(45deg, transparent 33.33%, #ffffff1a 33.33%, #ffffff1a 66.66%, transparent 66.66%);
+    background-size: 20px 40px;
+}
+
+.status-banner {
+    background-color: #f8fafc;
+    border-left: 4px solid currentColor;
+}
+
+.status-icon {
+    font-size: 1.5rem;
+    vertical-align: middle;
+}
+
+.class-badge {
+    transition: transform 0.2s ease;
+}
+
+    .class-badge:hover {
+        transform: translateY(-3px);
+    }
+
+.stat-card {
+    transition: transform 0.2s ease;
+}
+
+    .stat-card:hover {
+        transform: translateY(-3px);
+    }
+
+.card {
+    border: none;
+    border-radius: 1rem;
+    overflow: hidden;
+}
+
+.card-header {
+    border-bottom: none;
+}
+
+.btn {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+    .btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 6px rgba(59, 130, 246, 0.2);
+    }

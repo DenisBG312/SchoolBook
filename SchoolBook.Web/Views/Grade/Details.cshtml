@@ -18,6 +18,20 @@
             <div class="row g-4">
                 <div class="col-md-6">
                     <div class="info-group">
+                        <div class="profile-section mb-4">
+                            <div class="profile-image-container">
+                                @if (string.IsNullOrEmpty(Model.StudentImgUrl))
+                                {
+                                    <div class="default-avatar">
+                                        <i class="bi bi-person-circle"></i>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <img src="@Model.StudentImgUrl" alt="@Model.StudentName" class="profile-image" />
+                                }
+                            </div>
+                        </div>
                         <h3 class="h5 text-primary mb-3">
                             <i class="bi bi-person-badge"></i> 👨‍🎓 Student Information
                         </h3>
@@ -44,9 +58,29 @@
 
                 <div class="col-md-6">
                     <div class="info-group">
+                        <div class="profile-section mb-4">
+                            <div class="profile-image-container">
+                                @if (string.IsNullOrEmpty(Model.TeacherImgUrl))
+                                {
+                                    <div class="default-avatar">
+                                        <i class="bi bi-person-circle"></i>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <img src="@Model.TeacherImgUrl" alt="@Model.TeacherName" class="profile-image" />
+                                }
+                            </div>
+                        </div>
                         <h3 class="h5 text-primary mb-3">
                             <i class="bi bi-award"></i> 📊 Grade Information
                         </h3>
+                        <div class="mb-3 info-item">
+                            <label class="fw-bold">
+                                <i class="bi bi-person-workspace"></i> Teacher:
+                            </label>
+                            <p class="mb-0">👨‍🏫 @Model.TeacherName</p>
+                        </div>
                         <div class="mb-3 info-item">
                             <label class="fw-bold">
                                 <i class="bi bi-star"></i> Evaluation Name:
@@ -58,12 +92,6 @@
                                 <i class="bi bi-calendar"></i> Graded Date:
                             </label>
                             <p class="mb-0">📅 @Model.GradedDate.ToString("MMMM dd, yyyy")</p>
-                        </div>
-                        <div class="mb-3 info-item">
-                            <label class="fw-bold">
-                                <i class="bi bi-person-workspace"></i> Teacher:
-                            </label>
-                            <p class="mb-0">👨‍🏫 @Model.TeacherName</p>
                         </div>
                     </div>
                 </div>
@@ -97,3 +125,93 @@
         </div>
     </div>
 </div>
+
+<style>
+    .profile-section {
+        text-align: center;
+    }
+
+    .profile-image-container {
+        width: 150px;
+        height: 150px;
+        margin: 0 auto;
+        border-radius: 50%;
+        overflow: hidden;
+        border: 4px solid #3b82f6;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+        .profile-image-container:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+
+    .profile-image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .default-avatar {
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(135deg, #1e40af, #3b82f6);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 4rem;
+    }
+
+    .info-group {
+        background: white;
+        border-radius: 1rem;
+        padding: 1.5rem;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    }
+
+    .info-item {
+        transition: transform 0.2s ease;
+        padding: 0.75rem;
+        border-radius: 0.5rem;
+    }
+
+        .info-item:hover {
+            transform: translateX(5px);
+            background-color: #f8fafc;
+        }
+
+    .comment-box {
+        border-left: 4px solid #3b82f6;
+    }
+
+    .header-pattern {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 20px;
+        background: linear-gradient(45deg, transparent 33.33%, #ffffff1a 33.33%, #ffffff1a 66.66%, transparent 66.66%);
+        background-size: 20px 40px;
+    }
+
+    .card {
+        border: none;
+        border-radius: 1rem;
+        overflow: hidden;
+    }
+
+    .card-header {
+        border-bottom: none;
+    }
+
+    .btn-primary {
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px rgba(59, 130, 246, 0.2);
+        }
+</style>

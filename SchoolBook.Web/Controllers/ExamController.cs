@@ -34,34 +34,31 @@ namespace SchoolBook.Web.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetStudentExams()
+        public async Task<IActionResult> StudentExams()
         {
             var userId = GetUserId();
 
-            // Fetch the student and their class
             var student = await _context.Students
                 .Include(s => s.Class)
                 .FirstOrDefaultAsync(s => s.UserId == userId);
 
             if (student == null)
             {
-                return NotFound(); // Handle case where student does not exist
+                return NotFound();
             }
 
-            // Get the student's class ID
             var classId = student.Class?.Id;
 
             if (classId == null)
             {
-                return NotFound(); // Handle case where student is not associated with a class
+                return NotFound();
             }
 
-            // Fetch exams linked to the student's class
             var exams = await _context.Exams
-                .Include(e => e.Subject) // Include Subject details
-                .Include(e => e.ExamClasses) // Include ExamClasses for filtering
-                .ThenInclude(ec => ec.Class) // Include Class for relationship resolution
-                .Where(e => e.ExamClasses.Any(ec => ec.ClassId == classId)) // Match only exams for the student's class
+                .Include(e => e.Subject)
+                .Include(e => e.ExamClasses)
+                .ThenInclude(ec => ec.Class)
+                .Where(e => e.ExamClasses.Any(ec => ec.ClassId == classId))
                 .Select(e => new ExamIndexViewModel
                 {
                     Id = e.Id,
@@ -71,8 +68,7 @@ namespace SchoolBook.Web.Controllers
                 })
                 .ToListAsync();
 
-            // Return the shared Index view with filtered exams
-            return View("Index", exams);
+            return View(exams);
         }
 
         [HttpGet]
@@ -123,6 +119,41 @@ namespace SchoolBook.Web.Controllers
             model.Classes = new SelectList(await _context.Classes.ToListAsync(), "Id", "ClassName");
 
             return View(model);
+        }
+
+        public async Task<IActionResult> Details(int id)
+        {
+            var userId = GetUserId();
+
+            var student = await _context.Students
+                .Include(s => s.Class)
+                .ThenInclude(t => t.Teacher)
+                .ThenInclude(teacher => teacher.User)
+                .FirstOrDefaultAsync(s => s.UserId == userId);
+
+            if (student == null)
+            {
+                return NotFound();
+            }
+
+            var exam = await _context.Exams
+                .Select(x => new ExamDetailsViewModel()
+                {
+                    Id = x.Id,
+                    AssignedClasses = x.ExamClasses
+                        .Where(x => x.ClassId == student.ClassId)
+                        .Select(ec => ec.Class.ClassName)
+                        .ToList(),
+                    TeacherName = $"{student.Class.Teacher.User.FirstName} {student.Class.Teacher.User.LastName}",
+                    TeacherImgUrl = student.Class.Teacher.User.ProfileImgUrl,
+                    ExamDate = x.ExamDate,
+                    ExamName = x.ExamName,
+                    SubjectName = x.Subject.SubjectName,
+                    MaximumMarks = x.MaximumMarks
+                })
+                .FirstOrDefaultAsync(x => x.Id == id);
+
+            return View(exam);
         }
 
         private string GetUserId()

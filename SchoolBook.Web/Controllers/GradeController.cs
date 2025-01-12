@@ -79,7 +79,9 @@ namespace SchoolBook.Web.Controllers
                 TeacherName = $"{grade.Exam.Subject.Class.Teacher.User.FirstName} {grade.Exam.Subject.Class.Teacher.User.LastName}",
                 StudentName = $"{student.User.FirstName} {student.User.LastName}",
                 ClassName = grade.Exam.Subject.Class.ClassName,
-                SubjectName = grade.Exam.Subject.SubjectName
+                SubjectName = grade.Exam.Subject.SubjectName,
+                TeacherImgUrl = grade.Exam.Subject.Class.Teacher.User.ProfileImgUrl,
+                StudentImgUrl = student.User.ProfileImgUrl
             };
 
             return View(gradeDetails);
