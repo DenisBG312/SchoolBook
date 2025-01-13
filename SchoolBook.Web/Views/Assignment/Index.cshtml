@@ -1,0 +1,42 @@
+﻿@model IEnumerable<SchoolBook.Data.Models.Assignment>
+
+@{
+    ViewData["Title"] = "Assignments";
+}
+
+<div class="container mt-4">
+    <h2>Assignments</h2>
+
+    <a asp-action="Create" class="btn btn-primary mb-3">Create New Assignment</a>
+
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>Title</th>
+                <th>Subject</th>
+                <th>Assigned Date</th>
+                <th>Deadline</th>
+                <th>Submissions</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.Title</td>
+                    <td>@item.Subject.SubjectName</td>
+                    <td>@item.AssignedDate.ToString("dd.MM.yyyy")</td>
+                    <td>@item.Deadline.ToString("dd.MM.yyyy")</td>
+                    <td>@item.Submissions.Count</td>
+                    <td>
+                        <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-info btn-sm">Details</a>
+                        <a asp-action="GetSubmissions" asp-route-assignmentId="@item.Id" class="btn btn-secondary btn-sm">View Submissions</a>
+                    </td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -1,0 +1,71 @@
+﻿@model SchoolBook.Data.Models.Assignment
+
+@{
+    ViewData["Title"] = "Get Submissions";
+}
+
+<div class="container mt-4">
+    <h2>Assignment Details</h2>
+
+    <div class="card mb-4">
+        <div class="card-header">
+            <h3 class="card-title">@Model.Title</h3>
+        </div>
+        <div class="card-body">
+            <dl class="row">
+                <dt class="col-sm-3">Description</dt>
+                <dd class="col-sm-9">@Model.Description</dd>
+
+                <dt class="col-sm-3">Subject</dt>
+                <dd class="col-sm-9">@Model.Subject.SubjectName</dd>
+
+                <dt class="col-sm-3">Assigned Date</dt>
+                <dd class="col-sm-9">@Model.AssignedDate.ToString("g")</dd>
+
+                <dt class="col-sm-3">Deadline</dt>
+                <dd class="col-sm-9">@Model.Deadline.ToString("g")</dd>
+
+                <dt class="col-sm-3">Total Submissions</dt>
+                <dd class="col-sm-9">@Model.Submissions.Count</dd>
+            </dl>
+        </div>
+    </div>
+
+    <div class="mb-3">
+        <h4>Recent Submissions</h4>
+        @if (Model.Submissions.Any())
+        {
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Student</th>
+                            <th>Submission Date</th>
+                            <th>Marks</th>
+                            <th>Feedback</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var submission in Model.Submissions.OrderByDescending(s => s.SubmissionDate))
+                        {
+                            <tr>
+                                <td>@($"{submission.Student.User.FirstName} {submission.Student.User.LastName}")</td>
+                                <td>@submission.SubmissionDate.ToString("g")</td>
+                                <td>@(submission.MarksObtained?.ToString() ?? "Not graded")</td>
+                                <td>@(submission.Feedback ?? "No feedback")</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        }
+        else
+        {
+            <p class="text-muted">No submissions yet.</p>
+        }
+    </div>
+
+    <div>
+        <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+    </div>
+</div>

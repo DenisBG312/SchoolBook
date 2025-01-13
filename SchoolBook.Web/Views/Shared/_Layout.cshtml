@@ -15,6 +15,8 @@
     <link rel="stylesheet" href="~/SchoolBook.Web.styles.css" asp-append-version="true" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="~/css/layout-custom.css" />
+    
+    <link rel="icon" href="~/ic_school_128_28729.ico"/>
 </head>
 <body>
     <header>
@@ -38,6 +40,12 @@
                                 <a class="nav-link @(ViewContext.RouteData.Values["Controller"]?.ToString() == "Exam" ? "active" : "")"
                                    asp-area="" asp-controller="Exam" asp-action="Index">
                                     <i class="fas fa-book me-2"></i>Exams
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link @(ViewContext.RouteData.Values["Controller"]?.ToString() == "Assignment" ? "active" : "")"
+                                   asp-area="" asp-controller="Assignment" asp-action="Index">
+                                    <i class="fa-solid fa-clipboard-user me-2"></i>Assignments
                                 </a>
                             </li>
                         }

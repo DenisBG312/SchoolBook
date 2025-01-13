@@ -1,32 +1,33 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SchoolBook.Data.Models
+namespace SchoolBook.Web.ViewModels.Assignment
 {
-    public class Assignment
+    public class CreateAssignmentViewModel
     {
-        [Key]
-        public int Id { get; set; }
         [Required]
         [MaxLength(100)]
         public string Title { get; set; } = string.Empty;
+
         [MaxLength(250)]
         public string? Description { get; set; }
+
         [Required]
+        [Display(Name = "Assigned Date")]
         public DateTime AssignedDate { get; set; } = DateTime.Now;
+
         [Required]
         public DateTime Deadline { get; set; }
+
         [Required]
+        [Display(Name = "Subject")]
         public int SubjectId { get; set; }
-        [ForeignKey(nameof(SubjectId))]
-        public Subject Subject { get; set; } = null!;
 
-
-        public ICollection<AssignmentSubmission> Submissions { get; set; } = new HashSet<AssignmentSubmission>();
+        public IEnumerable<SelectListItem>? AvailableSubjects { get; set; }
     }
 }

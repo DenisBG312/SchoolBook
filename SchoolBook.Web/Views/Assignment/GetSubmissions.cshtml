@@ -1,0 +1,33 @@
+﻿@model IEnumerable<SchoolBook.Data.Models.AssignmentSubmission>
+
+<div class="container mt-4">
+    <h2>Assignment Submissions</h2>
+
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Student</th>
+                    <th>Submission Date</th>
+                    <th>Marks</th>
+                    <th>Feedback</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var submission in Model)
+                {
+                    <tr>
+                        <td>@($"{submission.Student.User.FirstName} {submission.Student.User.LastName}")</td>
+                        <td>@submission.SubmissionDate.ToString("g")</td>
+                        <td>@(submission.MarksObtained?.ToString() ?? "Not graded")</td>
+                        <td>@(submission.Feedback ?? "No feedback")</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <div>
+        <a asp-action="Details" asp-route-id="@Model.FirstOrDefault()?.AssignmentId" class="btn btn-secondary">Back to Assignment</a>
+    </div>
+</div>
