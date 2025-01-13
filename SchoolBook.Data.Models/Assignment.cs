@@ -25,8 +25,10 @@ namespace SchoolBook.Data.Models
         public int SubjectId { get; set; }
         [ForeignKey(nameof(SubjectId))]
         public Subject Subject { get; set; } = null!;
-
-
+        [Required]
+        public int ClassId { get; set; }
+        [ForeignKey(nameof(ClassId))]
+        public Class Class { get; set; }
         public ICollection<AssignmentSubmission> Submissions { get; set; } = new HashSet<AssignmentSubmission>();
     }
 }

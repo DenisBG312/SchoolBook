@@ -23,8 +23,8 @@ namespace SchoolBook.Web.ViewModels.Exam
         public int SubjectId { get; set; }
         public SelectList Subjects { get; set; }
         [Required]
-        [Display(Name = "Class")]
-        public int ClassId { get; set; }
-        public SelectList Classes { get; set; }
+        [Display(Name = "Classes")]
+        public List<int> SelectedClassIds { get; set; } = new List<int>();
+        public List<SelectListItem> ClassCheckboxes { get; set; } = new List<SelectListItem>();
     }
 }

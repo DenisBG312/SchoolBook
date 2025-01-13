@@ -74,13 +74,19 @@ namespace SchoolBook.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> Create()
         {
-            var viewModel = new ExamCreateViewModel
+            var model = new ExamCreateViewModel
             {
-                Subjects = new SelectList(await _context.Subjects.ToListAsync(), "Id", "SubjectName"),
-                Classes = new SelectList(await _context.Classes.ToListAsync(), "Id", "ClassName")
+                Subjects = new SelectList(_context.Subjects, "Id", "SubjectName"),
+                ClassCheckboxes = await _context.Classes
+                    .Select(c => new SelectListItem
+                    {
+                        Value = c.Id.ToString(),
+                        Text = c.ClassName
+                    })
+                    .ToListAsync()
             };
 
-            return View(viewModel);
+            return View(model);
         }
 
         [HttpPost]
@@ -103,20 +109,29 @@ namespace SchoolBook.Web.Controllers
                 await _context.Exams.AddAsync(exam);
                 await _context.SaveChangesAsync();
 
-                var examClass = new ExamClass()
+                foreach (var classId in model.SelectedClassIds)
                 {
-                    ExamId = exam.Id,
-                    ClassId = model.ClassId
-                };
-
-                await _context.ExamClasses.AddAsync(examClass);
+                    var examClass = new ExamClass
+                    {
+                        ExamId = exam.Id,
+                        ClassId = classId
+                    };
+                    await _context.ExamClasses.AddAsync(examClass);
+                }
                 await _context.SaveChangesAsync();
 
                 return RedirectToAction(nameof(Index));
             }
 
             model.Subjects = new SelectList(_context.Subjects, "Id", "SubjectName");
-            model.Classes = new SelectList(await _context.Classes.ToListAsync(), "Id", "ClassName");
+            model.ClassCheckboxes = await _context.Classes
+                .Select(c => new SelectListItem
+                {
+                    Value = c.Id.ToString(),
+                    Text = c.ClassName,
+                    Selected = model.SelectedClassIds.Contains(c.Id)
+                })
+                .ToListAsync();
 
             return View(model);
         }
