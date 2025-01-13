@@ -152,23 +152,29 @@ namespace SchoolBook.Web.Controllers
             }
 
             var exam = await _context.Exams
-                .Select(x => new ExamDetailsViewModel()
-                {
-                    Id = x.Id,
-                    AssignedClasses = x.ExamClasses
-                        .Where(x => x.ClassId == student.ClassId)
-                        .Select(ec => ec.Class.ClassName)
-                        .ToList(),
-                    TeacherName = $"{student.Class.Teacher.User.FirstName} {student.Class.Teacher.User.LastName}",
-                    TeacherImgUrl = student.Class.Teacher.User.ProfileImgUrl,
-                    ExamDate = x.ExamDate,
-                    ExamName = x.ExamName,
-                    SubjectName = x.Subject.SubjectName,
-                    MaximumMarks = x.MaximumMarks
-                })
-                .FirstOrDefaultAsync(x => x.Id == id);
+                .Include(e => e.ExamClasses)
+                .ThenInclude(ec => ec.Class)
+                .Include(e => e.Subject)
+                .FirstOrDefaultAsync(e => e.Id == id);
 
-            return View(exam);
+            if (exam == null)
+            {
+                return NotFound();
+            }
+
+            var examDetails = new ExamDetailsViewModel
+            {
+                Id = exam.Id,
+                AssignedClasses = exam.ExamClasses.Select(ec => ec.Class.ClassName).ToList(),
+                TeacherName = $"{student.Class.Teacher.User.FirstName} {student.Class.Teacher.User.LastName}",
+                TeacherImgUrl = student.Class.Teacher.User.ProfileImgUrl,
+                ExamDate = exam.ExamDate,
+                ExamName = exam.ExamName,
+                SubjectName = exam.Subject.SubjectName,
+                MaximumMarks = exam.MaximumMarks
+            };
+
+            return View(examDetails);
         }
 
         private string GetUserId()
