@@ -110,12 +110,12 @@ namespace SchoolBook.Web.Controllers
             return View(assignment);
         }
 
-        public async Task<IActionResult> GetSubmissions(int assignmentId)
+        public async Task<IActionResult> GetSubmissions(int id)
         {
             var submissions = await _context.AssignmentsSubmissions
                 .Include(s => s.Student)
                 .ThenInclude(s => s.User)
-                .Where(s => s.AssignmentId == assignmentId)
+                .Where(s => s.AssignmentId == id)
                 .OrderByDescending(s => s.SubmissionDate)
                 .ToListAsync();
 

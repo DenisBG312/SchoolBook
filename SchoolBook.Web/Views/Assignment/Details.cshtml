@@ -1,58 +1,85 @@
 ﻿@model SchoolBook.Data.Models.Assignment
 
 @{
-    ViewData["Title"] = "Get Submissions";
+    ViewData["Title"] = "Assignment Details";
 }
 
-<div class="container mt-4">
-    <h2>Assignment Details</h2>
+<link rel="stylesheet" href="~/css/assignment-details.css" />
 
-    <div class="card mb-4">
-        <div class="card-header">
-            <h3 class="card-title">@Model.Title</h3>
+<div class="container">
+    <div class="page-header">
+        <h1 class="page-title">📚 Assignment Details</h1>
+        <a href="javascript:history.back()" class="back-button">
+            ← Back to List
+        </a>
+    </div>
+
+    <div class="assignment-card">
+        <div class="assignment-header">
+            <h2 class="assignment-title">@Model.Title</h2>
         </div>
-        <div class="card-body">
-            <dl class="row">
-                <dt class="col-sm-3">Description</dt>
-                <dd class="col-sm-9">@Model.Description</dd>
-
-                <dt class="col-sm-3">Subject</dt>
-                <dd class="col-sm-9">@Model.Subject.SubjectName</dd>
-
-                <dt class="col-sm-3">Assigned Date</dt>
-                <dd class="col-sm-9">@Model.AssignedDate.ToString("g")</dd>
-
-                <dt class="col-sm-3">Deadline</dt>
-                <dd class="col-sm-9">@Model.Deadline.ToString("g")</dd>
-
-                <dt class="col-sm-3">Total Submissions</dt>
-                <dd class="col-sm-9">@Model.Submissions.Count</dd>
-            </dl>
+        <div class="assignment-content">
+            <div class="info-grid">
+                <div class="info-item">
+                    <span class="info-label">📝 Description</span>
+                    <div class="info-value">@Model.Description</div>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">📚 Subject</span>
+                    <div class="info-value">@Model.Subject.SubjectName</div>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">📅 Assigned Date</span>
+                    <div class="info-value">@Model.AssignedDate.ToString("g")</div>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">⏰ Deadline</span>
+                    <div class="info-value">@Model.Deadline.ToString("g")</div>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">📊 Total Submissions</span>
+                    <div class="info-value">@Model.Submissions.Count</div>
+                </div>
+            </div>
         </div>
     </div>
 
-    <div class="mb-3">
-        <h4>Recent Submissions</h4>
+    <div class="submissions-section">
+        <div class="section-header">
+            <h3 class="section-title">📥 Recent Submissions</h3>
+        </div>
+
         @if (Model.Submissions.Any())
         {
             <div class="table-responsive">
-                <table class="table table-striped">
+                <table class="submissions-table">
                     <thead>
                         <tr>
-                            <th>Student</th>
-                            <th>Submission Date</th>
-                            <th>Marks</th>
-                            <th>Feedback</th>
+                            <th>👤 Student</th>
+                            <th>📅 Submission Date</th>
+                            <th>📊 Marks</th>
+                            <th>💬 Feedback</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach (var submission in Model.Submissions.OrderByDescending(s => s.SubmissionDate))
                         {
                             <tr>
-                                <td>@($"{submission.Student.User.FirstName} {submission.Student.User.LastName}")</td>
+                                <td>
+                                    <strong>@($"{submission.Student.User.FirstName} {submission.Student.User.LastName}")</strong>
+                                </td>
                                 <td>@submission.SubmissionDate.ToString("g")</td>
-                                <td>@(submission.MarksObtained?.ToString() ?? "Not graded")</td>
-                                <td>@(submission.Feedback ?? "No feedback")</td>
+                                <td>
+                                    @if (submission.MarksObtained.HasValue)
+                                    {
+                                        <span class="status-badge status-graded">@submission.MarksObtained</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="status-badge status-not-graded">Not graded</span>
+                                    }
+                                </td>
+                                <td>@(submission.Feedback ?? "No feedback yet")</td>
                             </tr>
                         }
                     </tbody>
@@ -61,11 +88,9 @@
         }
         else
         {
-            <p class="text-muted">No submissions yet.</p>
+            <div class="empty-state">
+                <p>📭 No submissions received yet</p>
+            </div>
         }
-    </div>
-
-    <div>
-        <a asp-action="Index" class="btn btn-secondary">Back to List</a>
     </div>
 </div>
