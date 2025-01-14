@@ -1,0 +1,52 @@
+﻿@model SchoolBook.Data.Models.AssignmentSubmission
+
+<link rel="stylesheet" href="~/css/assignmet-submission-details.css" />
+
+@{
+    ViewData["Title"] = $"{Model.Student.User.FirstName}'s Submission";
+}
+
+<div class="container">
+    <div class="page-header">
+        <h1 class="page-title">📄 Submission Details</h1>
+        <a href="javascript:history.back()" class="back-button">← Back</a>
+    </div>
+    <div class="submission-card">
+        <div class="submission-header">
+            <h2 class="submission-title">Assignment: @Model.Assignment.Title</h2>
+        </div>
+        <div class="submission-content">
+            <div class="info-grid">
+                <div class="info-item">
+                    <span class="info-label">👤 Student</span>
+                    <div class="info-value">@($"{Model.Student.User.FirstName} {Model.Student.User.LastName}")</div>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">✍️ Answer</span>
+                    <div class="info-value">@Model.SubmissionContent</div>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">📅 Submission Date</span>
+                    <div class="info-value">@Model.SubmissionDate.ToString("g")</div>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">📊 Marks</span>
+                    <div class="info-value">
+                        @if (Model.MarksObtained.HasValue)
+                        {
+                            @Model.MarksObtained
+                        }
+                        else
+                        {
+                            <span class="status-badge status-not-graded">Not graded</span>
+                        }
+                    </div>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">💬 Feedback</span>
+                    <div class="info-value">@(Model.Feedback ?? "No feedback provided")</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

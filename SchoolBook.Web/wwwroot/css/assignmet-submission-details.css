@@ -1,0 +1,117 @@
+﻿:root {
+    --primary-blue: #2563eb;
+    --light-blue: #eff6ff;
+    --dark-blue: #1e40af;
+    --gray-text: #4b5563;
+    --border-radius: 12px;
+}
+
+body {
+    font-family: system-ui, -apple-system, sans-serif;
+    background-color: #f8fafc;
+    color: #1f2937;
+    line-height: 1.5;
+}
+
+.container {
+    max-width: 1000px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+}
+
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.page-title {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--dark-blue);
+    margin: 0;
+}
+
+.back-button {
+    text-decoration: none;
+    color: var(--primary-blue);
+    font-weight: 500;
+    padding: 0.5rem 1rem;
+    border-radius: var(--border-radius);
+    transition: background-color 0.2s;
+}
+
+    .back-button:hover {
+        background-color: var(--light-blue);
+    }
+
+.submission-card {
+    background: white;
+    border-radius: var(--border-radius);
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+    overflow: hidden;
+}
+
+.submission-header {
+    background: linear-gradient(135deg, var(--primary-blue), var(--dark-blue));
+    padding: 1.5rem;
+    color: white;
+}
+
+.submission-title {
+    margin: 0;
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+.submission-content {
+    padding: 2rem;
+}
+
+.info-grid {
+    display: grid;
+    gap: 2rem;
+}
+
+.info-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.info-label {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--gray-text);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.info-value {
+    font-size: 1rem;
+    padding: 1rem;
+    background-color: var(--light-blue);
+    border-radius: var(--border-radius);
+    border: 1px solid #e5e7eb;
+}
+
+.status-badge {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    border-radius: 9999px;
+    font-size: 0.875rem;
+    font-weight: 500;
+}
+
+.status-not-graded {
+    background-color: #fef3c7;
+    color: #92400e;
+}
+
+@media (min-width: 768px) {
+    .info-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}

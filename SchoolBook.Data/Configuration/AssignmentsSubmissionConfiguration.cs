@@ -28,6 +28,7 @@ namespace SchoolBook.Data.Configuration
                     AssignmentId = 1,
                     MarksObtained = 90,
                     Feedback = null,
+                    SubmissionContent = "This is just a demo answer to the given assignment."
                 }
             };
 

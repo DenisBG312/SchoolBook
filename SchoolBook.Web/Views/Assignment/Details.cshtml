@@ -59,6 +59,7 @@
                             <th>📅 Submission Date</th>
                             <th>📊 Marks</th>
                             <th>💬 Feedback</th>
+                            <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -80,6 +81,14 @@
                                     }
                                 </td>
                                 <td>@(submission.Feedback ?? "No feedback yet")</td>
+                                <td>
+                                    <a asp-controller="AssignmentSubmission" 
+                                       asp-action="Details" 
+                                       asp-route-id="@submission.Id" 
+                                       class="btn btn-sm btn-outline-primary rounded">
+                                        Details
+                                    </a>
+                                </td>
                             </tr>
                         }
                     </tbody>

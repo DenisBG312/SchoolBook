@@ -13,6 +13,9 @@ namespace SchoolBook.Data.Models
         [Key]
         public int Id { get; set; }
         [Required]
+        [MaxLength(600)]
+        public string SubmissionContent { get; set; } = string.Empty;
+        [Required]
         public DateTime SubmissionDate { get; set; } = DateTime.Now;
         public int? MarksObtained { get; set; }
         [MaxLength(300)]
