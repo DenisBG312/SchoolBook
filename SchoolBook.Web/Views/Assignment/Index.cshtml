@@ -1,143 +1,47 @@
-﻿<!DOCTYPE html>
-<html>
-<head>
-    <style>
-        :root {
-            --primary-blue: #2b6cb0;
-            --light-blue: #ebf8ff;
-            --hover-blue: #2c5282;
-        }
+﻿@model IEnumerable<SchoolBook.Data.Models.Assignment>
+@{
+    ViewData["Title"] = "Assignments";
+}
 
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 2rem;
-        }
+<link rel="stylesheet" href="~/css/assignment-index.css"/>
 
-        h2 {
-            color: var(--primary-blue);
-            font-size: 2rem;
-            margin-bottom: 1.5rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .btn-create {
-            background-color: var(--primary-blue);
-            color: white;
-            padding: 0.75rem 1.5rem;
-            border-radius: 0.5rem;
-            text-decoration: none;
-            transition: background-color 0.3s;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-            .btn-create:hover {
-                background-color: var(--hover-blue);
-                color: white;
-            }
-
-        .table {
-            width: 100%;
-            border-collapse: separate;
-            border-spacing: 0;
-            border-radius: 0.5rem;
-            overflow: hidden;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
-
-            .table thead {
-                background-color: var(--primary-blue);
-                color: white;
-            }
-
-            .table th {
-                padding: 1rem;
-                font-weight: 600;
-            }
-
-            .table td {
-                padding: 1rem;
-                background-color: white;
-            }
-
-            .table tbody tr:nth-child(even) td {
-                background-color: var(--light-blue);
-            }
-
-        .btn-action {
-            padding: 0.5rem 1rem;
-            border-radius: 0.25rem;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.25rem;
-            margin: 0.25rem;
-            transition: opacity 0.3s;
-        }
-
-            .btn-action:hover {
-                opacity: 0.9;
-            }
-
-        .btn-info {
-            background-color: #4299e1;
-            color: white;
-        }
-
-        .btn-secondary {
-            background-color: #718096;
-            color: white;
-        }
-    </style>
-</head>
-<body>
-    @model IEnumerable<SchoolBook.Data.Models.Assignment>
-    @{
-        ViewData["Title"] = "Assignments";
-    }
-    <div class="container">
-        <h2>📚 Assignments</h2>
-        <a asp-action="Create" class="btn-create mb-3">
-            ✨ Create New Assignment
-        </a>
-        <div class="table-responsive">
-            <table class="table align-middle">
-                <thead>
+<div class="container">
+    <h2>📚 Assignments</h2>
+    <a asp-action="Create" class="btn-create mb-3">
+        ✨ Create New Assignment
+    </a>
+    <div class="table-responsive">
+        <table class="table align-middle">
+            <thead>
+                <tr>
+                    <th scope="col">Title</th>
+                    <th scope="col">Subject</th>
+                    <th scope="col">Assigned Date</th>
+                    <th scope="col">Deadline</th>
+                    <th scope="col">Submissions</th>
+                    <th scope="col">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
                     <tr>
-                        <th scope="col">Title</th>
-                        <th scope="col">Subject</th>
-                        <th scope="col">Assigned Date</th>
-                        <th scope="col">Deadline</th>
-                        <th scope="col">Submissions</th>
-                        <th scope="col">Actions</th>
+                        <td>@item.Title</td>
+                        <td>@item.Subject.SubjectName</td>
+                        <td>@item.AssignedDate.ToString("dd.MM.yyyy")</td>
+                        <td>@item.Deadline.ToString("dd.MM.yyyy")</td>
+                        <td>@item.Submissions.Count</td>
+                        <td>
+                            <a asp-action="Details" asp-route-id="@item.Id" class="btn-action btn-info">
+                                👁️ Details
+                            </a>
+                            <a asp-action="GetSubmissions" asp-route-id="@item.Id" class="btn-action btn-secondary">
+                                📝 View Submissions
+                            </a>
+                        </td>
                     </tr>
-                </thead>
-                <tbody>
-                    @foreach (var item in Model)
-                    {
-                        <tr>
-                            <td>@item.Title</td>
-                            <td>@item.Subject.SubjectName</td>
-                            <td>@item.AssignedDate.ToString("dd.MM.yyyy")</td>
-                            <td>@item.Deadline.ToString("dd.MM.yyyy")</td>
-                            <td>@item.Submissions.Count</td>
-                            <td>
-                                <a asp-action="Details" asp-route-id="@item.Id" class="btn-action btn-info">
-                                    👁️ Details
-                                </a>
-                                <a asp-action="GetSubmissions" asp-route-id="@item.Id" class="btn-action btn-secondary">
-                                    📝 View Submissions
-                                </a>
-                            </td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
-        </div>
+                }
+            </tbody>
+        </table>
     </div>
-</body>
-</html>
+</div>
