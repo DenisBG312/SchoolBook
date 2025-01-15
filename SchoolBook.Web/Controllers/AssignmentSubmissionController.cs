@@ -33,7 +33,7 @@ namespace SchoolBook.Web.Controllers
             return View(submission);
         }
 
-        [HttpGet]
+        [HttpGet("{assignmentId}")]
         public async Task<IActionResult> Submit(int assignmentId)
         {
             var userId = GetUserId();
