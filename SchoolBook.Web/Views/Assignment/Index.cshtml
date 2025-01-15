@@ -1,47 +1,47 @@
 ﻿    @model IEnumerable<SchoolBook.Data.Models.Assignment>
 @{
-	ViewData["Title"] = "Assignments";
+    ViewData["Title"] = "Assignments";
 }
 
 <link rel="stylesheet" href="~/css/assignment-index.css" />
 
 <div class="container">
-	<h2>📚 Assignments</h2>
-	<a asp-action="Create" class="btn-create mb-3">
-		✨ Create New Assignment
-	</a>
-	<div class="table-responsive">
-		<table class="table align-middle">
-			<thead>
-				<tr>
-					<th scope="col">Title</th>
-					<th scope="col">Subject</th>
-					<th scope="col">Assigned Date</th>
-					<th scope="col">Deadline</th>
-					<th scope="col">Submissions</th>
-					<th scope="col">Actions</th>
-				</tr>
-			</thead>
-			<tbody>
-				@foreach (var item in Model)
-				{
-					<tr>
-						<td>@item.Title</td>
-						<td>@item.Subject.SubjectName</td>
-						<td>@item.AssignedDate.ToString("dd.MM.yyyy")</td>
-						<td>@item.Deadline.ToString("dd.MM.yyyy")</td>
-						<td>@item.Submissions.Count</td>
-						<td>
-							<a asp-action="Details" asp-route-id="@item.Id" class="btn-action btn-info">
-								👁️ Details
-							</a>
-							<a asp-action="GetSubmissions" asp-route-id="@item.Id" class="btn-action btn-secondary">
-								📝 View Submissions
-							</a>
-						</td>
-					</tr>
-				}
-			</tbody>
-		</table>
-	</div>
+    <h2>📚 Assignments</h2>
+    <a asp-action="Create" class="btn-create mb-3">
+        ✨ Create New Assignment
+    </a>
+    <div class="table-responsive">
+        <table class="table align-middle">
+            <thead>
+                <tr>
+                    <th scope="col">Title</th>
+                    <th scope="col">Subject</th>
+                    <th scope="col">Assigned Date</th>
+                    <th scope="col">Deadline</th>
+                    <th scope="col">Submissions</th>
+                    <th scope="col">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.Title</td>
+                        <td>@item.Subject.SubjectName</td>
+                        <td>@item.AssignedDate.ToString("dd.MM.yyyy")</td>
+                        <td>@item.Deadline.ToString("dd.MM.yyyy")</td>
+                        <td>@item.Submissions.Count</td>
+                        <td>
+                            <a asp-action="Details" asp-route-id="@item.Id" class="btn-action btn-info">
+                                👁️ Details
+                            </a>
+                            <a asp-action="GetSubmissions" asp-route-id="@item.Id" class="btn-action btn-secondary">
+                                📝 View Submissions
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
 </div>

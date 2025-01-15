@@ -30,16 +30,21 @@ namespace SchoolBook.Web.Controllers
                 return NotFound();
             }
 
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            ViewBag.IsTeacher = await _context.Teachers.AnyAsync(t => t.UserId == userId);
+
             return View(submission);
         }
 
-        [HttpGet("{assignmentId}")]
-        public async Task<IActionResult> Submit(int assignmentId)
+        [HttpGet]
+        public async Task<IActionResult> Submit(int id)
         {
             var userId = GetUserId();
+
             var student = await _context.Students
-                .Include(u => u.User)
                 .Include(s => s.Class)
+                .Include(s => s.User)
                 .FirstOrDefaultAsync(s => s.UserId == userId);
 
             if (student == null)
@@ -49,7 +54,7 @@ namespace SchoolBook.Web.Controllers
 
             var assignment = await _context.Assignments
                 .Include(a => a.Subject)
-                .FirstOrDefaultAsync(a => a.Id == assignmentId);
+                .FirstOrDefaultAsync(a => a.Id == id);
 
             if (assignment == null)
             {
@@ -57,21 +62,21 @@ namespace SchoolBook.Web.Controllers
             }
 
             var existingSubmission = await _context.AssignmentsSubmissions
-                .FirstOrDefaultAsync(s => s.AssignmentId == assignmentId && s.StudentId == student.Id);
+                .FirstOrDefaultAsync(s => s.AssignmentId == id && s.StudentId == student.Id);
 
             if (existingSubmission != null)
             {
                 return RedirectToAction("Details", "AssignmentSubmission", new { id = existingSubmission.Id });
             }
 
-            var viewModel = new SubmitAssignmentViewModel()
+            var viewModel = new SubmitAssignmentViewModel
             {
-                Id = assignmentId,
+                Id = id,
                 StudentId = student.Id,
-                SubmissionContent = string.Empty,
-                StudentName = student.User.FirstName + " " + student.User.LastName,
+                StudentName = $"{student.User.FirstName} {student.User.LastName}",
                 ClassName = student.Class.ClassName,
                 AssignmentTitle = assignment.Title,
+                SubmissionContent = string.Empty
             };
 
             return View(viewModel);
@@ -79,11 +84,13 @@ namespace SchoolBook.Web.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Submit(int assignmentId, SubmitAssignmentViewModel viewModel)
+        public async Task<IActionResult> Submit(SubmitAssignmentViewModel viewModel)
         {
             var userId = GetUserId();
+
             var student = await _context.Students
                 .Include(s => s.Class)
+                .Include(s => s.User)
                 .FirstOrDefaultAsync(s => s.UserId == userId);
 
             if (student == null)
@@ -91,11 +98,27 @@ namespace SchoolBook.Web.Controllers
                 return NotFound();
             }
 
+            var assignment = await _context.Assignments
+                .Include(a => a.Subject)
+                .FirstOrDefaultAsync(a => a.Id == viewModel.Id);
+
+            if (assignment == null)
+            {
+                return NotFound();
+            }
+
+            viewModel.StudentId = student.Id;
+            viewModel.StudentName = $"{student.User.FirstName} {student.User.LastName}";
+            viewModel.ClassName = student.Class.ClassName;
+            viewModel.AssignmentTitle = assignment.Title;
+
+            ModelState.Remove("StudentId");
+
             if (ModelState.IsValid)
             {
                 var submission = new AssignmentSubmission
                 {
-                    AssignmentId = assignmentId,
+                    AssignmentId = viewModel.Id,
                     StudentId = student.Id,
                     SubmissionDate = DateTime.Now,
                     SubmissionContent = viewModel.SubmissionContent
@@ -108,6 +131,27 @@ namespace SchoolBook.Web.Controllers
             }
 
             return View(viewModel);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Rate(int assignmentSubmissionId, int marksObtained, string feedback)
+        {
+            var submission = await _context.AssignmentsSubmissions
+                .FirstOrDefaultAsync(s => s.Id == assignmentSubmissionId);
+
+            if (submission == null)
+            {
+                return NotFound();
+            }
+
+            submission.MarksObtained = marksObtained;
+            submission.Feedback = feedback;
+
+            _context.Update(submission);
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction("Details", new { id = submission.Id });
         }
 
         private string GetUserId()

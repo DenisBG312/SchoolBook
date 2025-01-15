@@ -3,59 +3,75 @@
 <link rel="stylesheet" href="~/css/assignmet-submission-details.css" />
 
 @{
-	ViewData["Title"] = $"{Model.Student.User.FirstName}'s Submission";
+    ViewData["Title"] = $"{Model.Student.User.FirstName}'s Submission";
 }
 
 <div class="container">
-	<div class="page-header">
-		<h1 class="page-title">📄 Submission Details</h1>
-		<a href="javascript:history.back()" class="back-button">← Back</a>
-	</div>
-	<div class="submission-card">
-		<div class="submission-header">
-			<h2 class="submission-title">Assignment: @Model.Assignment.Title</h2>
-		</div>
-		<div class="submission-content">
-			<div class="info-grid">
-				<div class="info-item">
-					<span class="info-label">👤 Student</span>
-					<div class="info-value">@($"{Model.Student.User.FirstName} {Model.Student.User.LastName}")</div>
-				</div>
-				<div class="info-item">
-					<span class="info-label">✍️ Answer</span>
-					<div class="info-value">@Model.SubmissionContent</div>
-				</div>
-				<div class="info-item">
-					<span class="info-label">📅 Submission Date</span>
-					<div class="info-value">@Model.SubmissionDate.ToString("g")</div>
-				</div>
-				<div class="info-item">
-					<span class="info-label">📊 Marks</span>
-					<div class="info-value">
-						@if (Model.MarksObtained.HasValue)
-						{
-							@Model.MarksObtained
-						}
-						else
-						{
-							<span class="status-badge status-not-graded">Not graded</span>
-						}
-					</div>
-				</div>
-				<div class="info-item">
-					<span class="info-label">💬 Feedback</span>
-					<div class="info-value">@(Model.Feedback ?? "No feedback provided")</div>
-				</div>
-				@if (Model.MarksObtained == null)
-				{
-					<div class="info-item">
-						<a asp-controller="AssignmentSubmission"
-						   asp-action="Rate" class="btn btn-info">
-							Rate Assignment
-						</a>
-					</div>
-				}
-			</div>
-		</div>
-	</div>
+    <div class="page-header">
+        <h1 class="page-title">📄 Submission Details</h1>
+        <a href="javascript:history.back()" class="back-button">← Back</a>
+    </div>
+    <div class="submission-card">
+        <div class="submission-header">
+            <h2 class="submission-title">Assignment: @Model.Assignment.Title</h2>
+        </div>
+        <div class="submission-content">
+            <div class="info-grid">
+                <div class="info-item">
+                    <span class="info-label">👤 Student</span>
+                    <div class="info-value">@($"{Model.Student.User.FirstName} {Model.Student.User.LastName}")</div>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">✍️ Answer</span>
+                    <div class="info-value">@Model.SubmissionContent</div>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">📅 Submission Date</span>
+                    <div class="info-value">@Model.SubmissionDate.ToString("g")</div>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">📊 Marks</span>
+                    <div class="info-value">
+                        @if (Model.MarksObtained.HasValue)
+                        {
+                            @Model.MarksObtained
+                        }
+                        else
+                        {
+                            <span class="status-badge status-not-graded">Not graded</span>
+                        }
+                    </div>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">💬 Feedback</span>
+                    <div class="info-value">@(Model.Feedback ?? "No feedback provided")</div>
+                </div>
+
+                @if (Model.MarksObtained == null)
+                {
+                    @if (ViewBag.IsTeacher != null && (bool)ViewBag.IsTeacher)
+                    {
+                        <div class="info-item">
+                            <h3>Rate Assignment</h3>
+                            <form method="post" asp-action="Rate" asp-controller="AssignmentSubmission" asp-route-assignmentSubmissionId="@Model.Id">
+                                <div class="form-group">
+                                    <label asp-for="MarksObtained" class="control-label">Marks Obtained</label>
+                                    <input asp-for="MarksObtained" class="form-control" id="marksObtained" placeholder="Enter Marks" required />
+                                    <span asp-validation-for="MarksObtained" class="text-danger"></span>
+                                </div>
+
+                                <div class="form-group">
+                                    <label asp-for="Feedback" class="control-label">Feedback</label>
+                                    <textarea asp-for="Feedback" class="form-control" id="feedback" rows="3" placeholder="Provide feedback..." required></textarea>
+                                    <span asp-validation-for="Feedback" class="text-danger"></span>
+                                </div>
+
+                                <button type="submit" class="btn btn-primary">Submit Rating</button>
+                            </form>
+                        </div>
+                    }
+                }
+            </div>
+        </div>
+    </div>
 </div>

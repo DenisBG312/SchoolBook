@@ -16,7 +16,6 @@ namespace SchoolBook.Web.Controllers
             _context = context;
         }
 
-        [HttpGet]
         public async Task<IActionResult> Index()
         {
             var exams = await _context.Exams
@@ -33,7 +32,6 @@ namespace SchoolBook.Web.Controllers
             return View(exams);
         }
 
-        [HttpGet]
         public async Task<IActionResult> StudentExams()
         {
             var userId = GetUserId();
@@ -71,7 +69,6 @@ namespace SchoolBook.Web.Controllers
             return View(exams);
         }
 
-        [HttpGet]
         public async Task<IActionResult> Create()
         {
             var model = new ExamCreateViewModel
@@ -88,8 +85,6 @@ namespace SchoolBook.Web.Controllers
 
             return View(model);
         }
-
-        [HttpPost]
         public async Task<IActionResult> Create(ExamCreateViewModel model)
         {
             ModelState.Remove("Subjects");
