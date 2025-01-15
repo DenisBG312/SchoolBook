@@ -7,90 +7,96 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - SchoolBook.Web</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/SchoolBook.Web.styles.css" asp-append-version="true" />
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="~/css/layout-custom.css" />
-    
-    <link rel="icon" href="~/ic_school_128_28729.ico"/>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>@ViewData["Title"] - SchoolBook.Web</title>
+	<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+	<link rel="stylesheet" href="~/SchoolBook.Web.styles.css" asp-append-version="true" />
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="~/css/layout-custom.css" />
+
+	<link rel="icon" href="~/ic_school_128_28729.ico" />
 </head>
 <body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-light">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">SchoolBook</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link @(ViewContext.RouteData.Values["Controller"]?.ToString() == "Home" ? "active" : "")"
-                               asp-area="" asp-controller="Home" asp-action="Index">
-                                <i class="fas fa-home me-2"></i>Home
-                            </a>
-                        </li>
-                        @if (User.Identity.IsAuthenticated && DbContext.Teachers.Any(t => t.UserId == UserManager.GetUserId(User)))
-                        {
-                            <li class="nav-item">
-                                <a class="nav-link @(ViewContext.RouteData.Values["Controller"]?.ToString() == "Exam" ? "active" : "")"
-                                   asp-area="" asp-controller="Exam" asp-action="Index">
-                                    <i class="fas fa-book me-2"></i>Exams
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link @(ViewContext.RouteData.Values["Controller"]?.ToString() == "Assignment" ? "active" : "")"
-                                   asp-area="" asp-controller="Assignment" asp-action="Index">
-                                    <i class="fa-solid fa-clipboard-user me-2"></i>Assignments
-                                </a>
-                            </li>
-                        }
-                        @if (User.Identity.IsAuthenticated && DbContext.Students.Any(s => s.UserId == UserManager.GetUserId(User)))
-                        {
-                            <li class="nav-item">
-                                <a class="nav-link @(ViewContext.RouteData.Values["Controller"]?.ToString() == "Grade" ? "active" : "")"
-                                   asp-area="" asp-controller="Grade" asp-action="Index">
-                                    <i class="fas fa-graduation-cap me-2"></i>My Grades
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link @(ViewContext.RouteData.Values["Controller"]?.ToString() == "Exam" ? "active" : "")"
-                                   asp-area="" asp-controller="Exam" asp-action="StudentExams">
-                                    <i class="fa-solid fa-pencil me-2"></i>My Exams
-                                </a>
-                            </li>
-                        }
-                    </ul>
-                    <partial name="_LoginPartial" />
-                </div>
-            </div>
-        </nav>
-    </header>
+	<header>
+		<nav class="navbar navbar-expand-sm navbar-light">
+			<div class="container-fluid">
+				<a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">SchoolBook</a>
+				<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+				<div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+					<ul class="navbar-nav flex-grow-1">
+						<li class="nav-item">
+							<a class="nav-link @(ViewContext.RouteData.Values["Controller"]?.ToString() == "Home" ? "active" : "")"
+							   asp-area="" asp-controller="Home" asp-action="Index">
+								<i class="fas fa-home me-2"></i>Home
+							</a>
+						</li>
+						@if (User.Identity.IsAuthenticated && DbContext.Teachers.Any(t => t.UserId == UserManager.GetUserId(User)))
+						{
+							<li class="nav-item">
+								<a class="nav-link @(ViewContext.RouteData.Values["Controller"]?.ToString() == "Exam" ? "active" : "")"
+								   asp-area="" asp-controller="Exam" asp-action="Index">
+									<i class="fas fa-book me-2"></i>Exams
+								</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link @(ViewContext.RouteData.Values["Controller"]?.ToString() == "Assignment" ? "active" : "")"
+								   asp-area="" asp-controller="Assignment" asp-action="Index">
+									<i class="fa-solid fa-clipboard-user me-2"></i>Assignments
+								</a>
+							</li>
+						}
+						@if (User.Identity.IsAuthenticated && DbContext.Students.Any(s => s.UserId == UserManager.GetUserId(User)))
+						{
+							<li class="nav-item">
+								<a class="nav-link @(ViewContext.RouteData.Values["Controller"]?.ToString() == "Grade" ? "active" : "")"
+								   asp-area="" asp-controller="Grade" asp-action="Index">
+									<i class="fas fa-graduation-cap me-2"></i>My Grades
+								</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link @(ViewContext.RouteData.Values["Controller"]?.ToString() == "Exam" ? "active" : "")"
+								   asp-area="" asp-controller="Exam" asp-action="StudentExams">
+									<i class="fa-solid fa-pencil me-2"></i>My Exams
+								</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link @(ViewContext.RouteData.Values["Controller"]?.ToString() == "Assignment" ? "active" : "")"
+								   asp-area="" asp-controller="Assignment" asp-action="GetByClass">
+									<i class="fa-solid fa-list-check me-2"></i>My Assignments
+								</a>
+							</li>
+						}
+					</ul>
+					<partial name="_LoginPartial" />
+				</div>
+			</div>
+		</nav>
+	</header>
 
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
+	<div class="container">
+		<main role="main" class="pb-3">
+			@RenderBody()
+		</main>
+	</div>
 
-    <footer class="footer">
-        <div class="container text-center">
-            <div class="row">
-                <div class="col-12">
-                    <p class="mb-0">&copy; @DateTime.Now.Year - SchoolBook Educational Platform</p>
-                </div>
-            </div>
-        </div>
-    </footer>
+	<footer class="footer">
+		<div class="container text-center">
+			<div class="row">
+				<div class="col-12">
+					<p class="mb-0">&copy; @DateTime.Now.Year - SchoolBook Educational Platform</p>
+				</div>
+			</div>
+		</div>
+	</footer>
 
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
-    @await RenderSectionAsync("Scripts", required: false)
+	<script src="~/lib/jquery/dist/jquery.min.js"></script>
+	<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
+	<script src="~/js/site.js" asp-append-version="true"></script>
+	@await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

@@ -5,17 +5,20 @@ using Microsoft.EntityFrameworkCore;
 using SchoolBook.Data.Models;
 using SchoolBook.Web.Data;
 using SchoolBook.Web.ViewModels.Assignment;
+using System.Security.Claims;
 
 namespace SchoolBook.Web.Controllers
 {
     public class AssignmentController : Controller
     {
         private ApplicationDbContext _context;
+
         public AssignmentController(ApplicationDbContext context)
         {
             _context = context;
         }
 
+        [HttpGet]
         public async Task<IActionResult> Index()
         {
             var assignments = await _context.Assignments
@@ -26,6 +29,7 @@ namespace SchoolBook.Web.Controllers
             return View(assignments);
         }
 
+        [HttpGet]
         public async Task<IActionResult> Create()
         {
             var viewModel = new CreateAssignmentViewModel
@@ -108,17 +112,38 @@ namespace SchoolBook.Web.Controllers
             return View(viewModel);
         }
 
-        public async Task<IActionResult> GetByClass(int classId)
+        [HttpGet]
+        public async Task<IActionResult> GetByClass()
         {
+            var userId = GetUserId();
+
+            var student = await _context.Students
+                .Include(s => s.Class)
+                .FirstOrDefaultAsync(s => s.UserId == userId);
+
+            if (student == null)
+            {
+                return NotFound();
+            }
+
+            var classId = student.Class?.Id;
+
+            if (classId == null)
+            {
+                return NotFound();
+            }
+
             var assignments = await _context.Assignments
                 .Include(a => a.Subject)
                 .Include(a => a.Submissions)
-                .Where(a => a.Subject.ClassId == classId)
+                .Include(a => a.AssignmentClasses)
+                .Where(a => a.AssignmentClasses.Any(ac => ac.ClassId == classId))
                 .ToListAsync();
 
-            return View("Index", assignments);
+            return View(assignments);
         }
 
+        [HttpGet]
         public async Task<IActionResult> Details(int id)
         {
             var assignment = await _context.Assignments
@@ -136,6 +161,7 @@ namespace SchoolBook.Web.Controllers
             return View(assignment);
         }
 
+        [HttpGet]
         public async Task<IActionResult> GetSubmissions(int id)
         {
             var submissions = await _context.AssignmentsSubmissions
@@ -148,26 +174,9 @@ namespace SchoolBook.Web.Controllers
             return View(submissions);
         }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> SubmitAssignment(AssignmentSubmission submission)
+        private string GetUserId()
         {
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    submission.SubmissionDate = DateTime.Now;
-                    await _context.AssignmentsSubmissions.AddAsync(submission);
-                    await _context.SaveChangesAsync();
-                    return RedirectToAction(nameof(Details), new { id = submission.AssignmentId });
-                }
-                catch (Exception ex)
-                {
-                    ModelState.AddModelError("", "Unable to submit assignment. " + ex.Message);
-                }
-            }
-
-            return RedirectToAction(nameof(Details), new { id = submission.AssignmentId });
+            return User.FindFirstValue(ClaimTypes.NameIdentifier);
         }
     }
 }

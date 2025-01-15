@@ -1,0 +1,18 @@
+﻿@model SchoolBook.Web.ViewModels.AssignmentSubmission.SubmitAssignmentViewModel
+
+<h2>Submit Assignment: @Model.AssignmentTitle</h2>
+
+<div class="assignment-details">
+    <p><strong>Assignment Title:</strong> @Model.AssignmentTitle</p>
+    <p><strong>Student:</strong> @Model.StudentName</p>
+    <p><strong>Class:</strong> @Model.ClassName</p>
+</div>
+
+<form asp-action="Submit" method="post">
+    <div class="form-group">
+        <label for="SubmissionContent">Your Submission</label>
+        <textarea id="SubmissionContent" name="SubmissionContent" class="form-control" rows="6" required>@Model.SubmissionContent</textarea>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
