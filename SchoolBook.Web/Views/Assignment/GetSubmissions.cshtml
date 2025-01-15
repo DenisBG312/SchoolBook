@@ -1,10 +1,17 @@
 ﻿@model IEnumerable<SchoolBook.Data.Models.AssignmentSubmission>
 
-<div class="container mt-4">
-    <h2>Assignment Submissions</h2>
+@{
+    ViewData["Title"] = "Submissions";
+}
 
-    <div class="table-responsive">
-        <table class="table table-striped">
+<link rel="stylesheet" href="~/css/get-submissions.css"/>
+
+<div class="submissions-container">
+    <h2 class="submissions-title">
+        📚 Assignment Submissions 
+    </h2>
+    <div class="table-container">
+        <table class="table">
             <thead>
                 <tr>
                     <th>Student</th>
@@ -14,20 +21,64 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach (var submission in Model)
+                @if (Model != null && Model.Any())
+                {
+                    @foreach (var submission in Model)
+                    {
+                        <tr class="@(DateTime.Now.Subtract(submission.SubmissionDate).TotalHours < 24 ? "new-submission" : "")">
+                            <td>
+                                <div class="student-name">
+                                    @($"{submission.Student.User.FirstName} {submission.Student.User.LastName}")
+                                </div>
+                            </td>
+                            <td>
+                                <div class="submission-date">
+                                    🕒 @submission.SubmissionDate.ToString("MMM dd, yyyy HH:mm")
+                                </div>
+                            </td>
+                            <td>
+                                @if (submission.MarksObtained.HasValue)
+                                {
+                                    <span class="marks-obtained">
+                                        ✨ @submission.MarksObtained
+                                    </span>
+                                }
+                                else
+                                {
+                                    <span class="not-graded">
+                                        ⏳ Pending
+                                    </span>
+                                }
+                            </td>
+                            <td class="feedback-cell">
+                                @if (!string.IsNullOrEmpty(submission.Feedback))
+                                {
+                                    <span>💬 @submission.Feedback</span>
+                                }
+                                else
+                                {
+                                    <span class="not-graded">
+                                        📝 Awaiting feedback
+                                    </span>
+                                }
+                            </td>
+                        </tr>
+                    }
+                }
+                else
                 {
                     <tr>
-                        <td>@($"{submission.Student.User.FirstName} {submission.Student.User.LastName}")</td>
-                        <td>@submission.SubmissionDate.ToString("g")</td>
-                        <td>@(submission.MarksObtained?.ToString() ?? "Not graded")</td>
-                        <td>@(submission.Feedback ?? "No feedback")</td>
+                        <td colspan="4">
+                            <div class="no-submissions-message">
+                                📋 No submissions found
+                            </div>
+                        </td>
                     </tr>
                 }
             </tbody>
         </table>
     </div>
-
-    <div>
-        <a asp-action="Details" asp-route-id="@Model.FirstOrDefault()?.AssignmentId" class="btn btn-secondary">Back to Assignment</a>
-    </div>
+    <a asp-action="Details" asp-route-id="@Model.FirstOrDefault()?.AssignmentId" class="back-button">
+        ⬅️ Back to Assignment
+    </a>
 </div>
