@@ -22,6 +22,7 @@ namespace SchoolBook.Web.Data
         public DbSet<Subject> Subjects { get; set; }
         public DbSet<Teacher> Teachers { get; set; }
         public DbSet<ExamClass> ExamClasses { get; set; }
+        public DbSet<AssignmentClass> AssignmentClasses { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -41,6 +42,9 @@ namespace SchoolBook.Web.Data
 
             builder.Entity<ExamClass>()
                 .HasKey(pk => new { pk.ExamId, pk.ClassId});
+
+            builder.Entity<AssignmentClass>()
+                .HasKey(pk => new { pk.AssignmentId, pk.ClassId});
 
             builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
         }

@@ -28,7 +28,6 @@ namespace SchoolBook.Data.Configuration
                     Deadline = DateTime.Now.AddDays(7),
                     SubjectId = 1,
                     Description = "Is the sun a star or a planet? Write your answers below.",
-                    ClassId = 1
                 }
             };
 

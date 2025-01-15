@@ -19,7 +19,7 @@ namespace SchoolBook.Web.ViewModels.Assignment
 
         [Required]
         [Display(Name = "Assigned Date")]
-        public DateTime AssignedDate { get; set; } = DateTime.Now;
+		public DateTime AssignedDate { get; set; } = DateTime.Now;
 
         [Required]
         public DateTime Deadline { get; set; }

@@ -28,6 +28,6 @@ namespace SchoolBook.Data.Models
         public ICollection<Student> Students { get; set; } = new HashSet<Student>();
         public ICollection<Subject> Subjects { get; set; } = new HashSet<Subject>();
         public ICollection<ExamClass> ExamClasses { get; set; } = new HashSet<ExamClass>();
-        public ICollection<Assignment> Assignments { get; set; } = new HashSet<Assignment>();
+        public ICollection<AssignmentClass> AssignmentClasses { get; set; } = new HashSet<AssignmentClass>();
     }
 }
