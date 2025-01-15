@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Humanizer;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using SchoolBook.Data.Models;
@@ -37,7 +38,13 @@ namespace SchoolBook.Web.Controllers
                         Value = s.Id.ToString(),
                         Text = s.SubjectName
                     })
-                    .ToListAsync()
+                    .ToListAsync(),
+                ClassCheckboxes = await _context.Classes
+                .Select(s => new SelectListItem
+                {
+                    Value = s.Id.ToString(),
+                    Text = s.ClassName
+                }).ToListAsync()
             };
 
             return View(viewModel);
@@ -63,6 +70,18 @@ namespace SchoolBook.Web.Controllers
                     await _context.Assignments.AddAsync(assignment);
                     await _context.SaveChangesAsync();
 
+                    foreach (var classId in viewModel.SelectedClassIds)
+                    {
+                        var assignmentClass = new AssignmentClass
+                        {
+                            AssignmentId = assignment.Id,
+                            ClassId = classId
+                        };
+                        await _context.AssignmentClasses.AddAsync(assignmentClass);
+                    }
+
+                    await _context.SaveChangesAsync();
+
                     return RedirectToAction(nameof(Index));
                 }
                 catch (Exception ex)
@@ -78,6 +97,13 @@ namespace SchoolBook.Web.Controllers
                     Text = s.SubjectName
                 })
                 .ToListAsync();
+
+            viewModel.ClassCheckboxes = await _context.Classes
+                .Select(s => new SelectListItem
+                {
+                    Value = s.Id.ToString(),
+                    Text = s.ClassName
+                }).ToListAsync();
 
             return View(viewModel);
         }

@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
@@ -29,5 +30,9 @@ namespace SchoolBook.Web.ViewModels.Assignment
         public int SubjectId { get; set; }
 
         public IEnumerable<SelectListItem>? AvailableSubjects { get; set; }
+        [Required]
+        [DisplayName("Classes")]
+        public List<int> SelectedClassIds { get; set; } = new List<int>();
+        public List<SelectListItem> ClassCheckboxes { get; set; } = new List<SelectListItem>();
     }
 }
