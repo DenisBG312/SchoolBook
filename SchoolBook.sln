@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SchoolBook.Data", "SchoolBo
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SchoolBook.Data.Models", "SchoolBook.Data.Models\SchoolBook.Data.Models.csproj", "{D47CABAF-35CC-4979-9194-91D13AED3D82}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SchoolBook.Web.ViewModels", "SchoolBook.Web.ViewModels\SchoolBook.Web.ViewModels.csproj", "{6706ECAC-BF5C-4B32-9D56-629932592C3B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SchoolBook.Web.ViewModels", "SchoolBook.Web.ViewModels\SchoolBook.Web.ViewModels.csproj", "{6706ECAC-BF5C-4B32-9D56-629932592C3B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
