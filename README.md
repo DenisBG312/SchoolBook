@@ -17,6 +17,7 @@ The application uses a layered architecture:
 - 🔨 **Entity Framework**:	Database management and ORM
 - 🔢 **Database**: MSSQL Server
 - 🔒 **Authentication**: ASP.NET Identity
+- 📊 **Web API**: ASP.NET Core Web API
 
 ---
 
