@@ -67,7 +67,10 @@
                         {
                             <tr>
                                 <td>
-                                    <strong>@($"{submission.Student.User.FirstName} {submission.Student.User.LastName}")</strong>
+                                    <div class="student-info">
+                                        <img src="@submission.Student.User.ProfileImgUrl" alt="profile-img" class="student-avatar"/>
+                                        <span class="student-name">@($"{submission.Student.User.FirstName} {submission.Student.User.LastName}")</span>
+                                    </div>
                                 </td>
                                 <td>@submission.SubmissionDate.ToString("g")</td>
                                 <td>
