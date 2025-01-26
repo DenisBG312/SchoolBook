@@ -11,6 +11,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SchoolBook.Data.Models", "S
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SchoolBook.Web.ViewModels", "SchoolBook.Web.ViewModels\SchoolBook.Web.ViewModels.csproj", "{6706ECAC-BF5C-4B32-9D56-629932592C3B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SchoolBook.WebApi", "SchoolBook.WebApi\SchoolBook.WebApi.csproj", "{60411683-4C32-4EFB-8183-FD6E9D14C14F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{6706ECAC-BF5C-4B32-9D56-629932592C3B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6706ECAC-BF5C-4B32-9D56-629932592C3B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6706ECAC-BF5C-4B32-9D56-629932592C3B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{60411683-4C32-4EFB-8183-FD6E9D14C14F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{60411683-4C32-4EFB-8183-FD6E9D14C14F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{60411683-4C32-4EFB-8183-FD6E9D14C14F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{60411683-4C32-4EFB-8183-FD6E9D14C14F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

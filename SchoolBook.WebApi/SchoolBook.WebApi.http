@@ -1,0 +1,6 @@
+@SchoolBook.WebApi_HostAddress = http://localhost:5156
+
+GET {{SchoolBook.WebApi_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
