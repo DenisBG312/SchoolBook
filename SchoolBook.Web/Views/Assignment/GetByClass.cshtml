@@ -13,7 +13,7 @@
     </h2>
 
     <div class="assignments-grid">
-        @foreach (var assignment in Model)
+        @foreach (var assignment in Model.Where(s => s.Deadline > DateTime.Now))
         {
             <div class="assignment-card">
                 <div class="card-header">
@@ -46,6 +46,7 @@
                             <button type="submit" class="btn btn-primary">Submit Assignment</button>
                         </div>
                     </form>
+
                 </div>
             </div>
         }
