@@ -103,11 +103,6 @@
     justify-content: flex-start;
 }
 
-    .student-name::before {
-        content: '👤';
-        font-size: 1.2em;
-    }
-
 .submission-date {
     color: var(--gray-med);
     font-size: 0.95rem;
@@ -186,4 +181,12 @@
 
 .new-submission {
     animation: highlight 2s ease-out;
+}
+
+.student-avatar {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid var(--primary);
 }

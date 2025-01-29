@@ -28,6 +28,7 @@
                         <tr class="@(DateTime.Now.Subtract(submission.SubmissionDate).TotalHours < 24 ? "new-submission" : "")">
                             <td>
                                 <div class="student-name">
+                                    <img src="@submission.Student.User.ProfileImgUrl" alt="profile-img" class="student-avatar" />
                                     @($"{submission.Student.User.FirstName} {submission.Student.User.LastName}")
                                 </div>
                             </td>
